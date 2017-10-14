@@ -1,0 +1,47 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tephus"
+		]
+	},
+	"networknotice": "Network notice",
+	"networknotice-desc": "Allows staff to create more full featured site notices, network wide.",
+
+
+
+	"networknotice-templates.json": "{\"templates\":{\"Team\":{\"wikitext\": \"<span data-highlightingclass=\\\"{$name$}\\\" class=\\\"team-template-team-standard\\\"><span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span> <span class=\\\"team-template-text\\\">{$namewithlink$}</span></span>\",\"category\": \"Team Template Standard\"},\"TeamShort\":{\"wikitext\": \"<span data-highlightingclass=\\\"{$name$}\\\" class=\\\"team-template-team-short\\\"><span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span> <span class=\\\"team-template-text\\\">[[{$link$}|{$shortname$}]]</span></span>\",\"category\": \"Team Template Short\"},\"Team2\":{\"wikitext\": \"<span data-highlightingclass=\\\"{$name$}\\\" class=\\\"team-template-team2-standard\\\"><span class=\\\"team-template-text\\\">{$namewithlink$}</span> <span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span></span>\",\"category\": \"Team2 Template Standard\"},\"Team2Short\":{\"wikitext\": \"<span data-highlightingclass=\\\"{$name$}\\\" class=\\\"team-template-team2-short\\\"><span class=\\\"team-template-text\\\">[[{$link$}|{$shortname$}]]</span> <span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span></span>\",\"category\": \"Team2 Template Short\"},\"TeamBracket\":{\"wikitext\": \"<span data-highlightingclass=\\\"{$name$}\\\" class=\\\"team-template-team-bracket\\\"><span class=\\\"team-template-image\\\">[[File:{$image$}|link=]]</span> <span class=\\\"team-template-text\\\">{$name$}</span></span>\",\"category\": \"Team Template Bracket\"},\"TeamIcon\":{\"wikitext\": \"<span class=\\\"team-template-team-icon\\\"><span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span></span>\",\"category\": \"Team Template Icons\"},\"TeamPart\":{\"wikitext\": \"<div class=\\\"team-template-team-part\\\"><span class=\\\"team-template-image\\\">[[File:{$image$}|link={$link$}]]</span></div>\",\"category\": \"Team Template Participants\"},\"TeamPage\":{\"wikitext\": \"{$link$}\",\"category\": \"Team Template Page\"}}}",
+
+	"networknotice-create-network-notice-heading": "Create network notice",
+	"networknotice-delete-network-notice-heading": "Delete network notice",
+	"networknotice-preview-heading": "Preivew",
+	"networknotice-delete-network-notice-deletion-heading": "Confirm deletion",
+
+	"networknotice-create-notice-desc": "Creates network notices (site notices) that can be displayed network wide, with more features than standard site notices.",
+	"networknotice-create-notice-label-label": "Label:",
+	"networknotice-create-notice-label-helper": "Describe the notice, for browsing current notices in the DB. ",
+	"networknotice-create-notice-text-label": "Notice text:",
+	"networknotice-create-notice-text-helper": "e.g. \"Watch out for that shifty salle[] character\".  Supports HTML.",
+	"networknotice-create-notice-bgcolor-label": "Background Color:",
+	"networknotice-create-notice-bgcolor-helper": "e.g. \"#FF3A2B\".  (hex code)",
+	"networknotice-create-notice-bordercolor-label": "Border Color:",
+	"networknotice-create-notice-bordercolor-helper": "e.g. \"#FF3A2B\".  (hex code)",
+	"networknotice-create-notice-namespace-label": "Namespace:",
+	"networknotice-create-notice-namespace-helper": "e.g. \"Special\" or \"User\" or leave empty for all.",
+	"networknotice-create-notice-wiki-label": "Wiki:",
+	"networknotice-create-notice-wiki-helper": "e.g. \"dota2\" or leave empty for all.",
+	"networknotice-create-notice-category-label": "Category:",
+	"networknotice-create-notice-category-helper": "e.g. \"players\" or leave empty for all.",
+	"networknotice-create-notice-create-button": "Create",
+	"networknotice-create-notice-preview-button": "Preview",
+
+
+
+
+	"networknotice-delete-notice-delete-button": "Delete",
+	"networknotice-delete-notice-view-button": "View",
+	"networknotice-delete-notice-text-label": "Notice text:",
+
+
+
+	"specialpages-group-liquipedia": "Liquipedia"
+}

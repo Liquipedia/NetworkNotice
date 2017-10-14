@@ -1,0 +1,51 @@
+{
+	"name": "NetworkNotice",
+	"version": "0.1",
+	"author": [
+		"Tephus"
+	],
+	"url": "http://wiki.teamliquid.net/",
+	"descriptionmsg": "networknotice-desc",
+	"license-name": "MIT",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.25.0"
+	},
+	"MessagesDirs": {
+		"NetworkNotice": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"NetworkNoticeAlias": "NetworkNoticeAlias.php"
+	},
+	"AutoloadClasses": {
+		"NetworkNoticeHooks": "NetworkNoticeHooks.php",
+		"SpecialNetworkNotice": "SpecialNetworkNotice.php"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": [
+			"NetworkNoticeHooks::onParserFirstCallInit"
+		],
+		"LiquiFlowNetworkNotice": [
+			"NetworkNoticeHooks::onLiquiFlowNetworkNotice"
+		]
+
+	},
+	"SpecialPages": {
+		"NetworkNotice": "SpecialNetworkNotice"
+	},
+	"ResourceModules": {
+		"ext.networknotice.SpecialPage": {
+			"styles": [
+				"ext.networknotice.SpecialPage.css"
+			],
+			"position": "top"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "NetworkNotice"
+	},
+	"manifest_version": 1
+}
