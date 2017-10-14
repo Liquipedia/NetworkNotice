@@ -12,4 +12,4 @@ Installation
 
 * Add hook to skin in appropriate place:
 	
-	<?php Hooks::run( 'LiquiFlowNetworkNotice'); ?>
+	`<?php Hooks::run( 'LiquiFlowNetworkNotice'); ?>`
