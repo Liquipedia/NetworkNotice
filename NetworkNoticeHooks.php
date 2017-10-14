@@ -6,17 +6,14 @@ class NetworkNoticeHooks {
 		
 	public static function onParserFirstCallInit( $parser ) {
 		// for <emptyextensionparsertag> style
-		//$parser->setHook( 'headeralertparsertag', 'HeaderAlertHooks::hookFunctionTag' );
+		//$parser->setHook( 'networknoticeparsertag', 'NetworkNoticeHooks::hookFunctionTag' );
 		// for {{#emptyextensionparserfunction:stuff}} style, there need to be aliased in EmptyExtensionAlias.php
-		//$parser->setFunctionHook( 'headeralertparserfunction', 'HeaderAlertHooks::hookFunctionParser' );
+		//$parser->setFunctionHook( 'networknoticeparserfunction', 'NetworkNoticeHooks::hookFunctionParser' );
 	}
 
 
 	private static function fromSiteNotice( $arg ){
 
-
-		//echo 
-		//$string += $wgOut->getCategories();
 
 
 		//echo '<div id="main-content" class="mw-body"><div style="background-color:#f2dede; margin-top:3px border-color:#ebccd1; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#a94442; border-left:5px solid #ff0000;">Here is a <a href="https://www.google.ca">link</a>!! </div>'
@@ -40,8 +37,6 @@ class NetworkNoticeHooks {
 					break;
 			}
 		}
-
-//echo MWNamespace::getCanonicalName($wgOut->getTitle()->getNamespace());
 
 		$hasNamespace = TRUE;
 		if ( $obj->{'namespace'} ) {
@@ -110,7 +105,7 @@ class NetworkNoticeHooks {
 
 	}
 
-	public static function onLiquiFlowNetworkNotice( $arg ){
+	public static function onLiquiFlowNetworkNotice( ){
 		
 
 		global $wgDBname;
@@ -143,8 +138,6 @@ class NetworkNoticeHooks {
 				}
 			}
 		}
-		//$wgOut->getTitle();
-		//$wgOut->getTitle();
 		return true;
 
 

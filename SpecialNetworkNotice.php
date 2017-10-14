@@ -63,7 +63,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
 
-		//ONLY STAFF, OTHERWISE RETURN HERE.
+		//TODO: PERMISSIONS CHECK?
 
 		$reqLabel      	= $request->getText( 'noticelabel' );
 		$reqText      	= $request->getText( 'noticetext' );
@@ -172,8 +172,8 @@ class SpecialNetworkNotice extends SpecialPage {
 		</td>
 	</tr>
 </table>
-</form>'
-. implode($wgUser->getAllRights(), ', ') );
+</form>');
+//. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
 		
 		if ( $request->getBool( 'deletebutton' )){
 

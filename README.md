@@ -9,3 +9,7 @@ Installation
 * Add the following line to LocalSettings.php:
 
 	wfLoadExtension( 'NetworkNotice' );
+
+* Add hook to skin in appropriate place:
+	
+	<?php Hooks::run( 'LiquiFlowNetworkNotice'); ?>
