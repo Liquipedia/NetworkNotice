@@ -47,5 +47,14 @@
 		"localBasePath": "",
 		"remoteExtPath": "NetworkNotice"
 	},
+	"GroupPermissions": {
+		"sysop": {
+			"usenetworknotice": true
+		}
+
+	},
+	"AvailableRights": [
+		"usenetworknotice"
+	],
 	"manifest_version": 1
 }

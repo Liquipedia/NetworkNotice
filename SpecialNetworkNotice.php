@@ -63,7 +63,9 @@ class SpecialNetworkNotice extends SpecialPage {
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
 
-		//TODO: PERMISSIONS CHECK?
+		if (!$wgUser->isAllowed('usenetworknotice'))
+			return true;
+		
 
 		$reqLabel      	= $request->getText( 'noticelabel' );
 		$reqText      	= $request->getText( 'noticetext' );
@@ -148,6 +150,12 @@ class SpecialNetworkNotice extends SpecialPage {
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-delete-network-notice-heading' )->text() . '</span></h2>');
 
+
+		if ( $request->getBool( 'deletebutton' )){
+
+			self::deleteNetworkNotice( $reqId );
+
+		}
 		$currentnotices = self::getNetworkNotices();
 		$temp_html = '';
 
@@ -172,20 +180,14 @@ class SpecialNetworkNotice extends SpecialPage {
 		</td>
 	</tr>
 </table>
-</form>');
-//. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
+</form>'
+. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
 		
-		if ( $request->getBool( 'deletebutton' )){
-
-			self::deleteNetworkNotice( $reqId );
-
-		}
 		if ( $request->getBool( 'deleteviewbutton' )){
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
 			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>');
 		}
 		
-
 
 	}
 

@@ -110,6 +110,7 @@ class NetworkNoticeHooks {
 
 		global $wgDBname;
 		global $wgOut;
+		global $wgScriptPath;
 		$dbr = wfGetDB( DB_REPLICA, '', $wgDBname);
 		$tablename = 'networknotice';
 		$id = 8;
@@ -119,7 +120,7 @@ class NetworkNoticeHooks {
 		$namespace = MWNamespace::getCanonicalName($wgOut->getTitle()->getNamespace());
 		//Media .. Special .. Talk .. User .. User_talk .. Project .. Project_talk .. File .. File_talk .. MediaWiki .. MediaWiki_talk .. Template .. Template_talk .. Help .. Help_talk .. Category .. Category_talk
 
-		$wiki = '';
+		$wiki = substr($wgScriptPath, 1);  //Remove leading '/'
 
 
 		$res = $dbr->select( $tablename, array('notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category'), '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND (`wiki` = "' . $wiki . '" OR `wiki` = "")');
@@ -138,10 +139,10 @@ class NetworkNoticeHooks {
 				}
 			}
 		}
+		
+
 		return true;
 
-
-		
 
 	}
 
