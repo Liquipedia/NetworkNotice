@@ -65,7 +65,7 @@ class SpecialNetworkNotice extends SpecialPage {
 
 		if (!$wgUser->isAllowed('usenetworknotice'))
 			return true;
-		
+
 
 		$reqLabel      	= $request->getText( 'noticelabel' );
 		$reqText      	= $request->getText( 'noticetext' );
@@ -75,6 +75,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqWiki 		= $request->getText( 'wiki' );
 		$reqCategory 	= $request->getText( 'category' );
 		$reqTemporary 	= $request->getBool( 'temporary' );
+		$reqPrefix	 	= $request->getText( 'prefix' );
 		$reqId			= $request->getText( 'noticedelete' );
 
 		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice">
@@ -100,7 +101,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bordercolor-helper' )->text() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="amespace">' . $this->msg( 'networknotice-create-notice-namespace-label' )->text() . '</label></td>
+		<td class="input-label"><label for="namespace">' . $this->msg( 'networknotice-create-notice-namespace-label' )->text() . '</label></td>
 		<td class="input-container"><input type="text" name="namespace" id="namespace" value="' . $reqNamespace . '"></td>
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-namespace-helper' )->text() . '</td>
 	</tr>
@@ -113,6 +114,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-label"><label for="category">' . $this->msg( 'networknotice-create-notice-category-label' )->text() . '</label></td>
 		<td class="input-container"><input type="text" name="category" id="category" value="' . $reqCategory . '"></td>
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-category-helper' )->text() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="prefix">' . $this->msg( 'networknotice-create-notice-prefix-label' )->text() . '</label></td>
+		<td class="input-container"><input type="text" name="prefix" id="prefix" value="' . $reqPrefix . '"></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-prefix-helper' )->text() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
@@ -135,7 +141,8 @@ class SpecialNetworkNotice extends SpecialPage {
 					'namespace' => $reqNamespace,
 					'wiki' => $reqWiki,
 					'category' => $reqCategory,
-					'temporary' => $reqTemporary
+					'temporary' => $reqTemporary,
+					'prefix' => $reqPrefix
 				);
 
 			self::createNetworkNotice( $vars );
@@ -180,8 +187,8 @@ class SpecialNetworkNotice extends SpecialPage {
 		</td>
 	</tr>
 </table>
-</form>'
-. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
+</form>');
+//. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
 		
 		if ( $request->getBool( 'deleteviewbutton' )){
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );

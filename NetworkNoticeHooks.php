@@ -111,6 +111,8 @@ class NetworkNoticeHooks {
 		global $wgDBname;
 		global $wgOut;
 		global $wgScriptPath;
+		global $wgTitle;
+
 		$dbr = wfGetDB( DB_REPLICA, '', $wgDBname);
 		$tablename = 'networknotice';
 		$id = 8;
@@ -122,12 +124,26 @@ class NetworkNoticeHooks {
 
 		$wiki = substr($wgScriptPath, 1);  //Remove leading '/'
 
+		$pagetitle = $wgTitle->getFullText();
 
-		$res = $dbr->select( $tablename, array('notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category'), '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND (`wiki` = "' . $wiki . '" OR `wiki` = "")');
+		//echo $wgTitle->getFullText();
+
+		$action = '';
 
 
-		
+		//do wiki and namespace checks in DB query
+		$res = $dbr->select( $tablename, array('notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category', 'prefix'), '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND (`wiki` = "' . $wiki . '" OR `wiki` = "")');
+
+
+
 		foreach ($res as $row){
+			//If prefix doesnt match, go to next row/notice
+			if(strncmp( $pagetitle, $row->{'prefix'}, strlen($row->{'prefix'}))){
+				continue;
+			}
+
+
+			//finally, check categories
 			if($row->{'category'} == ""){
 				self::echoNotice($row);
 			}else{
@@ -138,14 +154,17 @@ class NetworkNoticeHooks {
 					}
 				}
 			}
+		
+
+
 		}
 		
+;
 
 		return true;
 
 
 	}
-
 
 
 }
