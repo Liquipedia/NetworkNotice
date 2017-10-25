@@ -3,7 +3,7 @@
 class SpecialNetworkNotice extends SpecialPage {
 	
 	function __construct() {
-		parent::__construct( 'NetworkNotice', 'edit' );
+		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
 	}
 
 	function getGroupName() {
@@ -62,9 +62,6 @@ class SpecialNetworkNotice extends SpecialPage {
 			-scope</div>' );*/
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
-
-		if (!$wgUser->isAllowed('usenetworknotice'))
-			return true;
 
 
 		$reqLabel      	= $request->getText( 'noticelabel' );
