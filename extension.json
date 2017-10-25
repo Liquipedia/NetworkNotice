@@ -24,9 +24,6 @@
 		"SpecialNetworkNotice": "SpecialNetworkNotice.php"
 	},
 	"Hooks": {
-		"ParserFirstCallInit": [
-			"NetworkNoticeHooks::onParserFirstCallInit"
-		],
 		"LiquiFlowNetworkNotice": [
 			"NetworkNoticeHooks::onLiquiFlowNetworkNotice"
 		]

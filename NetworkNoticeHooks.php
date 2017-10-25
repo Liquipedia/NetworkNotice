@@ -2,19 +2,7 @@
 
 class NetworkNoticeHooks {
 
-
-		
-	public static function onParserFirstCallInit( $parser ) {
-		// for <emptyextensionparsertag> style
-		//$parser->setHook( 'networknoticeparsertag', 'NetworkNoticeHooks::hookFunctionTag' );
-		// for {{#emptyextensionparserfunction:stuff}} style, there need to be aliased in EmptyExtensionAlias.php
-		//$parser->setFunctionHook( 'networknoticeparserfunction', 'NetworkNoticeHooks::hookFunctionParser' );
-	}
-
-
 	private static function fromSiteNotice( $arg ){
-
-
 
 		//echo '<div id="main-content" class="mw-body"><div style="background-color:#f2dede; margin-top:3px border-color:#ebccd1; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#a94442; border-left:5px solid #ff0000;">Here is a <a href="https://www.google.ca">link</a>!! </div>'
 
