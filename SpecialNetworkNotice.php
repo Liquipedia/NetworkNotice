@@ -168,7 +168,6 @@ class SpecialNetworkNotice extends SpecialPage {
 	</tr>
 </table>
 </form>');
-//. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
 		
 		if ( $request->getBool( 'deleteviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
