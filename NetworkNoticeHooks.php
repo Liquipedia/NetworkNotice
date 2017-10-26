@@ -3,7 +3,7 @@
 class NetworkNoticeHooks {
 
 
-		
+	
 	public static function onParserFirstCallInit( $parser ) {
 
 	}
