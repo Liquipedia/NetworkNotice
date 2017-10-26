@@ -28,4 +28,4 @@ Installation
   `prefix` blob NOT NULL,
   `action` blob NOT NULL,
   `temporary` tinyint(1) NOT NULL DEFAULT '0'
-)```
+  PRIMARY KEY (`notice_id`))```
