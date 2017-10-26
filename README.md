@@ -17,7 +17,7 @@ Installation
 * Add table to DB:
 
 	```CREATE TABLE `networknotice` (
-  `notice_id` int(11) NOT NULL,
+  `notice_id` int(11) NOT NULL AUTO_INCREMENT,
   `label` tinyblob NOT NULL,
   `wiki` blob NOT NULL,
   `namespace` tinyblob NOT NULL,
