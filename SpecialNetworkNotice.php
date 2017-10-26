@@ -47,6 +47,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$request = $this->getRequest();
 
 		global $wgUser;
+		global $wgOut;
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>' );
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
@@ -133,7 +134,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		}
 		if ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>' );
+			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
 		}
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-delete-network-notice-heading' )->text() . '</span></h2>' );

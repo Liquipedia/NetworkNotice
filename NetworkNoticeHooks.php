@@ -10,7 +10,8 @@ class NetworkNoticeHooks {
 
 	private static function echoNotice( $row ) {
 
-		echo '<div style="background-color:' . $row->{'bgcolor'}  .  '; margin-top:10px; border-color:' . $row->{'bordercolor'}  .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $row->{'bordercolor'}  .  ';">' . $row->{'notice_text'}  . '</div>';
+		global $wgOut;
+		echo '<div style="background-color:' . $row->{'bgcolor'}  .  '; margin-top:10px; border-color:' . $row->{'bordercolor'}  .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $row->{'bordercolor'}  .  ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 
 	}
 

@@ -22,7 +22,7 @@
 	"networknotice-create-notice-label-label": "Label:",
 	"networknotice-create-notice-label-helper": "Describe the notice, for browsing current notices in the DB. ",
 	"networknotice-create-notice-text-label": "Notice Text:",
-	"networknotice-create-notice-text-helper": "e.g. \"Watch out for that shifty salle[] character\".  Supports HTML.",
+	"networknotice-create-notice-text-helper": "e.g. \"Watch out for that shifty salle[] character\".  Supports wikicode and some HTML.",
 	"networknotice-create-notice-bgcolor-label": "Background Color:",
 	"networknotice-create-notice-bgcolor-helper": "e.g. \"#FF3A2B\".  (hex code)",
 	"networknotice-create-notice-bordercolor-label": "Border Color:",
