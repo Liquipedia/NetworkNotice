@@ -3,7 +3,7 @@
 class SpecialNetworkNotice extends SpecialPage {
 	
 	function __construct() {
-		parent::__construct( 'NetworkNotice', 'edit' );
+		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
 	}
 
 	function getGroupName() {
@@ -13,35 +13,28 @@ class SpecialNetworkNotice extends SpecialPage {
 
 	function createNetworkNotice( $vars ) {
 		global $wgDBname;
-		$dbr = wfGetDB( DB_MASTER, '', $wgDBname);
-		$tablename = 'networknotice';	
-		$dbr->insert( $tablename, $vars);	
-		/*$res = $dbr->insert( $tablename, array('notice_text' => $vars->'text', 
-											   'bgcolor' => $vars->'bgcolor', 
-											   'bordercolor' => $vars->'bordercolor',
-											   'wikis' => $vars->'wikis',
-											   'category' => $vars->'category',
-											   'namespace' => $vars->'namespace'));*/
+		$dbr = wfGetDB( DB_MASTER, '', $wgDBname );
+		$tablename = 'networknotice';
+		$dbr->insert( $tablename, $vars );
 
 	}
 
 	function getNetworkNotices() {
 		global $wgDBname;
 		$dbr = wfGetDB( DB_MASTER, '', $wgDBname);
-		$tablename = 'networknotice';	
-		return $dbr->select( $tablename, array('notice_id', 'label'));	
+		$tablename = 'networknotice';
+		return $dbr->select( $tablename, array('notice_id', 'label'));
 
 	}
 
 	function deleteNetworkNotice( $var ) {
 		global $wgDBname;
 		$dbr = wfGetDB( DB_MASTER, '', $wgDBname);
-		$tablename = 'networknotice';	
+		$tablename = 'networknotice';
 
-		return $dbr->delete( $tablename, array('notice_id' => $var) );	
+		return $dbr->delete( $tablename, array( 'notice_id' => $var ) );
 
 	}
-
 
 	function execute( $par ) {
 		if ( !$this->userCanExecute( $this->getUser() ) ) {
@@ -50,22 +43,13 @@ class SpecialNetworkNotice extends SpecialPage {
 		}
 		$output = $this->getOutput();
 		$this->setHeaders();
-		$output->addModuleStyles( 'ext.networknotice.SpecialPage');
+		$output->addModuleStyles( 'ext.networknotice.SpecialPage' );
 		$request = $this->getRequest();
 
 		global $wgUser;
-		/*$output->addHTML( 
-			'<div>Add configuration options here:<br>
-			-Text/html<br> 
-			-Namespace:  Main = 1,  User = 2, Template = 10, Special = -1<br>
-			-permanency</div>
-			-scope</div>' );*/
-		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>');
+
+		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>' );
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
-
-		if (!$wgUser->isAllowed('usenetworknotice'))
-			return true;
-
 
 		$reqLabel      	= $request->getText( 'noticelabel' );
 		$reqText      	= $request->getText( 'noticetext' );
@@ -128,10 +112,10 @@ class SpecialNetworkNotice extends SpecialPage {
 		</td>
 	</tr>
 </table>
-</form>');
+</form>' );
 
 
-		if ( $request->getBool( 'createbutton' )){
+		if ( $request->getBool( 'createbutton' ) ) {
 
 			$vars = array( 
 					'label' => $reqLabel,
@@ -147,18 +131,15 @@ class SpecialNetworkNotice extends SpecialPage {
 
 			self::createNetworkNotice( $vars );
 		}
-		if ( $request->getBool( 'createpreviewbutton' )){
+		if ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>');
+			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>' );
 		}
-		//$output->addHTML($output->getHTML());
+
+		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-delete-network-notice-heading' )->text() . '</span></h2>' );
 
 
-
-		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-delete-network-notice-heading' )->text() . '</span></h2>');
-
-
-		if ( $request->getBool( 'deletebutton' )){
+		if ( $request->getBool( 'deletebutton' ) ) {
 
 			self::deleteNetworkNotice( $reqId );
 
@@ -167,10 +148,9 @@ class SpecialNetworkNotice extends SpecialPage {
 		$temp_html = '';
 
 
-		foreach ($currentnotices as $notice){
+		foreach ( $currentnotices as $notice ) {
 			$temp_html .= '<option value="' . $notice->{'notice_id'} . '">' . $notice->{'label'} . '</option>';
 		}
-
 
 
 
@@ -190,9 +170,9 @@ class SpecialNetworkNotice extends SpecialPage {
 </form>');
 //. implode($wgUser->getAllRights(), ', ') ); #can probably remove...
 		
-		if ( $request->getBool( 'deleteviewbutton' )){
+		if ( $request->getBool( 'deleteviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>');
+			$output->addHTML( '<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>' );
 		}
 		
 

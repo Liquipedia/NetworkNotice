@@ -4,6 +4,9 @@
 			"Tephus"
 		]
 	},
+
+	"action-usenetworknotice": "create or modify network notices",
+
 	"networknotice": "Network notice",
 	"networknotice-desc": "Allows staff to create more full featured site notices, network wide.",
 
@@ -34,7 +37,7 @@
 	"networknotice-create-notice-prefix-label": "Page Prefix:",
 	"networknotice-create-notice-prefix-helper": "e.g. \"The International/\" or leave empty to ignore.",
 	"networknotice-create-notice-action-label": "Action:",
-	"networknotice-create-notice-action-helper": "e.g. \"Move\" or \"Delete\" leave empty to ignore.",
+	"networknotice-create-notice-action-helper": "e.g. \"MovePage\" or \"Delete\" leave empty to ignore.",
 	"networknotice-create-notice-create-button": "Create",
 	"networknotice-create-notice-preview-button": "Preview",
 
