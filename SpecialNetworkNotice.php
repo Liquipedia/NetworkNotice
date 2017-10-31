@@ -71,18 +71,18 @@ class SpecialNetworkNotice extends SpecialPage {
 						"yellow" => "#ffff00",
 						"purple" => "#ff00ff",
 						"turquoise" => "#00ffff",
-						"grey" => "#333333",
+						"dark grey" => "#333333",
 						"black" => "#000000"
 		];
 		$bgcolors	= [
-						"red" => "#ffcccc",
-						"green" => "#ccffcc",
-						"blue" => "#ccccff",
-						"yellow" => "#ffffcc",
-						"purple" => "#ffccff",
-						"turquoise" => "#ccffff",
+						"light red" => "#ffcccc",
+						"light green" => "#ccffcc",
+						"light blue" => "#ccccff",
+						"light yellow" => "#ffffcc",
+						"light purple" => "#ffccff",
+						"light turquoise" => "#ccffff",
 						"grey" => "#cccccc",
-						"lightgrey" => "#eeeeee"
+						"light grey" => "#eeeeee"
 		];
 
 
