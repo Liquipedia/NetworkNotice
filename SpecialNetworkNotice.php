@@ -63,6 +63,48 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqPrefix	 	= $request->getText( 'prefix' );
 		$reqId			= $request->getText( 'noticedelete' );
 
+
+		$bordercolors	= [
+						"red" => "#ff0000",
+						"green" => "#00ff00",
+						"blue" => "#0000ff",
+						"yellow" => "#ffff00",
+						"purple" => "#ff00ff",
+						"turquoise" => "#00ffff",
+						"grey" => "#333333",
+						"black" => "#000000"
+		];
+		$bgcolors	= [
+						"red" => "#ffcccc",
+						"green" => "#ccffcc",
+						"blue" => "#ccccff",
+						"yellow" => "#ffffcc",
+						"purple" => "#ffccff",
+						"turquoise" => "#ccffff",
+						"grey" => "#cccccc",
+						"lightgrey" => "#eeeeee"
+		];
+
+
+		$bordercolor_html = '';
+		foreach ( array_keys( $bordercolors ) as $color ) {
+			if( $bordercolors[$color] === $reqBordercolor ) {
+				$bordercolor_html .= '<option selected="selected" value="' . $bordercolors[$color] . '">' . $color . ' <' . $bordercolors[$color] . '></option>';
+			} else {
+				$bordercolor_html .= '<option value="' . $bordercolors[$color] . '">' . $color . ' <' . $bordercolors[$color] . '></option>';
+			}
+		}
+
+		$bgcolor_html = '';
+		foreach ( array_keys( $bgcolors ) as $color ) {
+			if( $bgcolors[$color] === $reqBgcolor ) {
+				$bgcolor_html .= '<option selected="selected" value="' . $bgcolors[$color] . '">' . $color . ' <' . $bgcolors[$color] . '></option>';
+			} else {
+				$bgcolor_html .= '<option value="' . $bgcolors[$color] . '">' . $color . ' <' . $bgcolors[$color] . '></option>';
+			}
+		}
+
+
 		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice">
 <table>
 	<tr>
@@ -77,12 +119,12 @@ class SpecialNetworkNotice extends SpecialPage {
 	</tr>
 	<tr>
 		<td class="input-label"><label for="bgcolor">' . $this->msg( 'networknotice-create-notice-bgcolor-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="bgcolor" id="bgcolor" value="' . $reqBgcolor . '"></td>
+		<td class="input-container"><select name="bgcolor" id="bgcolor" style="width: 165pt; ">' . $bgcolor_html . '</select></td>
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bgcolor-helper' )->text() . '</td>
 	</tr>
 	<tr>
 		<td class="input-label"><label for="bordercolor">' . $this->msg( 'networknotice-create-notice-bordercolor-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="bordercolor" id="bordercolor" value="' . $reqBordercolor . '"></td>
+		<td class="input-container"><select name="bordercolor" id="bordercolor" style="width: 165pt; ">' . $bordercolor_html . '</select></td>
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bordercolor-helper' )->text() . '</td>
 	</tr>
 	<tr>
@@ -146,9 +188,9 @@ class SpecialNetworkNotice extends SpecialPage {
 
 		}
 		$currentnotices = self::getNetworkNotices();
+
+
 		$temp_html = '';
-
-
 		foreach ( $currentnotices as $notice ) {
 			$temp_html .= '<option value="' . $notice->{'notice_id'} . '">' . $notice->{'label'} . '</option>';
 		}
