@@ -39,7 +39,7 @@ class NetworkNoticeHooks {
 		$movepage = "Special:MovePage";
 		if ( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {
 			$action = "move";
-		} elseif ( !$wgTitle->exists() && $action == "edit" ) {
+		} elseif ( $action == "edit" && !$wgTitle->exists() ) {
 			$action = "create";
 		}
 
