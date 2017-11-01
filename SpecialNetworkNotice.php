@@ -59,8 +59,9 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqNamespace   = $request->getText( 'namespace' );
 		$reqWiki 		= $request->getText( 'wiki' );
 		$reqCategory 	= $request->getText( 'category' );
-		$reqTemporary 	= $request->getBool( 'temporary' );
 		$reqPrefix	 	= $request->getText( 'prefix' );
+		$reqAction	 	= $request->getText( 'action' );
+		$reqTemporary 	= $request->getBool( 'temporary' );
 		$reqId			= $request->getText( 'noticedelete' );
 
 
@@ -148,6 +149,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-prefix-helper' )->text() . '</td>
 	</tr>
 	<tr>
+		<td class="input-label"><label for="action">' . $this->msg( 'networknotice-create-notice-action-label' )->text() . '</label></td>
+		<td class="input-container"><input type="text" name="action" id="action" value="' . $reqAction . '"></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-action-helper' )->text() . '</td>
+	</tr>
+	<tr>
 		<td> </td>
 		<td colspan="2">
 			<input type="submit" name="createbutton" value="' . $this->msg( 'networknotice-create-notice-create-button' )->text() . '"> 
@@ -169,7 +175,8 @@ class SpecialNetworkNotice extends SpecialPage {
 					'wiki' => $reqWiki,
 					'category' => $reqCategory,
 					'temporary' => $reqTemporary,
-					'prefix' => $reqPrefix
+					'prefix' => str_replace( '_', ' ', $reqPrefix ),
+					'action' => $reqAction
 				);
 
 			self::createNetworkNotice( $vars );

@@ -33,7 +33,7 @@
 	"networknotice-create-notice-prefix-label": "Page Prefix:",
 	"networknotice-create-notice-prefix-helper": "e.g. \"The International/\" or leave empty to ignore.",
 	"networknotice-create-notice-action-label": "Action:",
-	"networknotice-create-notice-action-helper": "e.g. \"MovePage\" or \"Delete\" leave empty to ignore.",
+	"networknotice-create-notice-action-helper": "e.g. \"protect\" or \"delete\" leave empty to ignore.",
 	"networknotice-create-notice-create-button": "Create",
 	"networknotice-create-notice-preview-button": "Preview",
 

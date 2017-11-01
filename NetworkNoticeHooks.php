@@ -15,7 +15,7 @@ class NetworkNoticeHooks {
 
 	}
 
-	public static function onLiquiFlowNetworkNotice( ) {
+	public static function onLiquiFlowNetworkNotice( $context ) {
 
 
 		global $wgDBname;
@@ -34,11 +34,18 @@ class NetworkNoticeHooks {
 
 		$pagetitle = $wgTitle->getFullText();
 
-		$action = '';
+		$action = Action::getActionName( $context );
+		
+		$movepage = "Special:MovePage";
+		if ( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {
+			$action = "move";
+		}
 
 		//do wiki and namespace checks in DB query
-		$res = $dbr->select( $tablename, array( 'notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category', 'prefix' ), '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND (`wiki` = "' . $wiki . '" OR `wiki` = "")' );
-
+		$res = $dbr->select( $tablename, array( 'notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category', 'prefix' ), 
+			'(`namespace` = "' . $namespace . '" OR `namespace` = "") AND 
+			 (`wiki` = "' . $wiki . '" OR `wiki` = "") AND 
+			 (`action` = "' . $action . '" OR `action` = "")' );
 
 
 		foreach ( $res as $row ) {
@@ -46,7 +53,6 @@ class NetworkNoticeHooks {
 			if( strncmp( $pagetitle, $row->{'prefix'}, strlen( $row->{'prefix'} ) ) ){ 
 				continue;
 			}
-
 			//finally, check categories
 			if( $row->{'category'} == "" ) {
 				self::echoNotice( $row );
@@ -59,7 +65,6 @@ class NetworkNoticeHooks {
 				}
 			}
 		}
-
 		return true;
 
 	}
