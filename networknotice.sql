@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `networknotice` (
   `notice_text` blob NOT NULL,
   `bgcolor` tinyblob NOT NULL,
   `bordercolor` tinyblob NOT NULL,
+  `fontcolor` tinyblob NOT NULL,
   `category` blob NOT NULL,
   `prefix` blob NOT NULL,
   `action` blob NOT NULL,

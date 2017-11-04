@@ -56,6 +56,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqText      	= $request->getText( 'noticetext' );
 		$reqBgcolor  	= $request->getText( 'bgcolor' );
 		$reqBordercolor = $request->getText( 'bordercolor' );
+		$reqFontcolor 	= $request->getText( 'fontcolor' );
 		$reqNamespace   = $request->getText( 'namespace' );
 		$reqWiki 		= $request->getText( 'wiki' );
 		$reqCategory 	= $request->getText( 'category' );
@@ -129,6 +130,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bordercolor-helper' )->text() . '</td>
 	</tr>
 	<tr>
+		<td class="input-label"><label for="fontcolor">' . $this->msg( 'networknotice-create-notice-fontcolor-label' )->text() . '</label></td>
+		<td class="input-container"><input type="text" name="fontcolor" id="fontcolor" value="' . $reqFontcolor . '"></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-fontcolor-helper' )->text() . '</td>
+	</tr>
+	<tr>
 		<td class="input-label"><label for="namespace">' . $this->msg( 'networknotice-create-notice-namespace-label' )->text() . '</label></td>
 		<td class="input-container"><input type="text" name="namespace" id="namespace" value="' . $reqNamespace . '"></td>
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-namespace-helper' )->text() . '</td>
@@ -171,6 +177,7 @@ class SpecialNetworkNotice extends SpecialPage {
 					'notice_text' => $reqText,
 					'bgcolor' => $reqBgcolor,
 					'bordercolor' => $reqBordercolor,
+					'fontcolor' => $reqFontcolor,
 					'namespace' => $reqNamespace,
 					'wiki' => $reqWiki,
 					'category' => $reqCategory,

@@ -24,6 +24,8 @@
 	"networknotice-create-notice-bgcolor-helper": "Lighter color for behind the text.",
 	"networknotice-create-notice-bordercolor-label": "Border Color:",
 	"networknotice-create-notice-bordercolor-helper": "Dark color for border.",
+	"networknotice-create-notice-fontcolor-label": "Font Color:",
+	"networknotice-create-notice-fontcolor-helper": "e.g. \"Red\" or \"#cc1111\". Can be plain english, or hex value.",
 	"networknotice-create-notice-namespace-label": "Namespace:",
 	"networknotice-create-notice-namespace-helper": "e.g. \"Special\" or \"User\" or leave empty for all.",
 	"networknotice-create-notice-wiki-label": "Wiki:",

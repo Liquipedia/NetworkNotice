@@ -11,7 +11,7 @@ class NetworkNoticeHooks {
 	private static function echoNotice( $row ) {
 
 		global $wgOut;
-		echo '<div style="background-color:' . $row->{'bgcolor'}  .  '; margin-top:10px; border-color:' . $row->{'bordercolor'}  .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $row->{'bordercolor'}  .  ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
+		echo '<div style="background-color:' . $row->{'bgcolor'}  .  '; margin-top:10px; border-color:' . $row->{'bordercolor'}  .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $row->{'bordercolor'}  .  '; color:' . $row->{'fontcolor'} . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 
 	}
 
@@ -35,14 +35,14 @@ class NetworkNoticeHooks {
 		$pagetitle = $wgTitle->getFullText();
 
 		$action = Action::getActionName( $context );
-		
+
 		$movepage = "Special:MovePage";
 		if ( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {
 			$action = "move";
 		}
 
 		//do wiki and namespace checks in DB query
-		$res = $dbr->select( $tablename, array( 'notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category', 'prefix' ), 
+		$res = $dbr->select( $tablename, array( 'notice_text', 'bgcolor', 'bordercolor', 'wiki', 'category', 'prefix', 'fontcolor' ), 
 			'(`namespace` = "' . $namespace . '" OR `namespace` = "") AND 
 			 (`wiki` = "' . $wiki . '" OR `wiki` = "") AND 
 			 (`action` = "' . $action . '" OR `action` = "")' );
