@@ -32,13 +32,15 @@ class NetworkNoticeHooks {
 
 		$wiki = substr( $wgScriptPath, 1 );  //Remove leading '/'
 
-		$pagetitle = $wgTitle->getFullText();
+		$pagetitle = $wgTitle->getText();
 
 		$action = Action::getActionName( $context );
 
 		$movepage = "Special:MovePage";
 		if ( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {
 			$action = "move";
+		} elseif ( $action == "edit" && !$wgTitle->exists() ) {
+			$action = "create";
 		}
 
 		//do wiki and namespace checks in DB query
@@ -49,7 +51,7 @@ class NetworkNoticeHooks {
 
 
 		foreach ( $res as $row ) {
-			//If prefix doesnt match, go to next row/notice
+			//If prefix doesnt                                                                                                                         match, go to next row/notice
 			if( strncmp( $pagetitle, $row->{'prefix'}, strlen( $row->{'prefix'} ) ) ){ 
 				continue;
 			}
