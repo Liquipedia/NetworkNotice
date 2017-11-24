@@ -19,13 +19,23 @@ class SpecialNetworkNotice extends SpecialPage {
 
 	}
 
+
+	function updateNetworkNotice( $vars, $id ) {
+		global $wgDBname;
+		$dbr = wfGetDB( DB_MASTER, '', $wgDBname );
+		$tablename = 'networknotice';
+		$dbr->update( $tablename, $vars, array( 'notice_id' => $id ) );
+
+	}
+
 	function getNetworkNotices() {
 		global $wgDBname;
 		$dbr = wfGetDB( DB_MASTER, '', $wgDBname);
 		$tablename = 'networknotice';
-		return $dbr->select( $tablename, array('notice_id', 'label'));
+		return $dbr->select( $tablename, array('notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action' ));
 
 	}
+
 
 	function deleteNetworkNotice( $var ) {
 		global $wgDBname;
@@ -45,70 +55,128 @@ class SpecialNetworkNotice extends SpecialPage {
 		$this->setHeaders();
 		$output->addModuleStyles( 'ext.networknotice.SpecialPage' );
 		$request = $this->getRequest();
+		$params = explode( '/', $par );
+
+		if ( $params[0] == "delete" && isset( $params[1] ) && !empty( $params[1] ) ) {
+			self::deleteNetworkNotice( $params[1] );
+		}
+
+
+		$currentnotices = self::getNetworkNotices();
 
 		global $wgUser;
 		global $wgOut;
 
-		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>' );
-		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
-
+		$reqNoticeid	= $request->getText( 'noticeid' );
 		$reqLabel      	= $request->getText( 'noticelabel' );
 		$reqText      	= $request->getText( 'noticetext' );
-		$reqBgcolor  	= $request->getText( 'bgcolor' );
-		$reqBordercolor = $request->getText( 'bordercolor' );
-		$reqFontcolor 	= $request->getText( 'fontcolor' );
+		$reqStyle		= $request->getText( 'style' );
 		$reqNamespace   = $request->getText( 'namespace' );
 		$reqWiki 		= $request->getText( 'wiki' );
 		$reqCategory 	= $request->getText( 'category' );
 		$reqPrefix	 	= $request->getText( 'prefix' );
 		$reqAction	 	= $request->getText( 'action' );
-		$reqTemporary 	= $request->getBool( 'temporary' );
-		$reqId			= $request->getText( 'noticedelete' );
 
 
-		$bordercolors	= [
-						"red" => "#ff0000",
-						"green" => "#00ff00",
-						"blue" => "#0000ff",
-						"yellow" => "#ffff00",
-						"purple" => "#ff00ff",
-						"turquoise" => "#00ffff",
-						"dark grey" => "#333333",
-						"black" => "#000000"
+
+		$styles = [
+						"default" => array(
+							"bordercolor"=>"default",
+							"bgcolor"=>"default",
+							"fontcolor"=>"#444444",
+										),
+						"inverse" => array(
+							"bordercolor"=>"inverse",
+							"bgcolor"=>"inverse",
+							"fontcolor"=>"white",
+										),
+						"red" => array(
+							"bordercolor"=>"#ff0000",
+							"bgcolor"=>"#ffcccc",
+							"fontcolor"=>"#444444",
+										),
+						"green" => array(
+							"bordercolor"=>"#00ff00",
+							"bgcolor"=>"#ccffcc",
+							"fontcolor"=>"#444444",
+										),
+						"blue" => array(
+							"bordercolor"=>"#0000ff",
+							"bgcolor"=>"#ccccff",
+							"fontcolor"=>"#444444",
+										),
+						"yellow" => array(
+							"bordercolor"=>"#ffff00",
+							"bgcolor"=>"#ffffcc",
+							"fontcolor"=>"#444444",
+										),
+						"purple" => array(
+							"bordercolor"=>"#ff00ff",
+							"bgcolor"=>"#ffccff",
+							"fontcolor"=>"#444444",
+										),
+						"turquoise" => array(
+							"bordercolor"=>"#00ffff",
+							"bgcolor"=>"#ccffff",
+							"fontcolor"=>"#444444",
+										),
+						"light grey" => array(
+							"bordercolor"=>"#333333",
+							"bgcolor"=>"#cccccc",
+							"fontcolor"=>"#444444",
+										),
+						"dark grey" => array(
+							"bordercolor"=>"#000000",
+							"bgcolor"=>"#eeeeee",
+							"fontcolor"=>"#444444",
+										),
 		];
-		$bgcolors	= [
-						"light red" => "#ffcccc",
-						"light green" => "#ccffcc",
-						"light blue" => "#ccccff",
-						"light yellow" => "#ffffcc",
-						"light purple" => "#ffccff",
-						"light turquoise" => "#ccffff",
-						"grey" => "#cccccc",
-						"light grey" => "#eeeeee"
-		];
+		if ( $params[0] == "edit" && isset( $params[1] ) && !empty( $params[1] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' )){
+
+			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-edit-network-notice-heading' )->text() . '</span></h2>' );
+			while ( $row = $currentnotices->fetchRow() ){
+				if ( $row['notice_id'] ==  $params[1] ){
+					$reqNoticeid	= $row['notice_id'];
+					$reqLabel      	= $row['label'];
+					$reqText      	= $row['notice_text'];
+					$reqStyle  		= $row['style']; 
+					$reqNamespace   = $row['namespace'];
+					$reqWiki 		= $row['wiki'];
+					$reqCategory 	= $row['category'];
+					$reqPrefix	 	= $row['prefix'];
+					$reqAction	 	= $row['action'];
+				}
+			}
+		} else {
+
+			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>' );
+		}
 
 
-		$bordercolor_html = '';
-		foreach ( array_keys( $bordercolors ) as $color ) {
-			if( $bordercolors[$color] === $reqBordercolor ) {
-				$bordercolor_html .= '<option selected="selected" value="' . $bordercolors[$color] . '">' . $color . ' <' . $bordercolors[$color] . '></option>';
+
+
+		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
+
+		$style_html = '';
+		foreach ( array_keys( $styles ) as $color ) {
+			if ( $color == $reqStyle ) {
+				$style_html .= '<option selected="selected" value="' . $color . '">' . $color . '</option>';
 			} else {
-				$bordercolor_html .= '<option value="' . $bordercolors[$color] . '">' . $color . ' <' . $bordercolors[$color] . '></option>';
+				$style_html .= '<option value="' . $color . '">' . $color . '</option>';
 			}
 		}
 
-		$bgcolor_html = '';
-		foreach ( array_keys( $bgcolors ) as $color ) {
-			if( $bgcolors[$color] === $reqBgcolor ) {
-				$bgcolor_html .= '<option selected="selected" value="' . $bgcolors[$color] . '">' . $color . ' <' . $bgcolors[$color] . '></option>';
-			} else {
-				$bgcolor_html .= '<option value="' . $bgcolors[$color] . '">' . $color . ' <' . $bgcolors[$color] . '></option>';
-			}
+		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice"> 
+<table>' );
+		if ( $params[0] == "edit" ){
+			$output->addHTML( '
+	<tr>
+		<td class="input-label"><label for="noticeid">' . $this->msg( 'networknotice-edit-notice-id-label' )->text() . '</label></td>
+		<td class="input-container"><input type="text" name="noticeid" id="noticeid" value="' . $reqNoticeid . '" readonly></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-edit-notice-id-helper' )->text() . '</td>
+	</tr>' );
 		}
-
-
-		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice">
-<table>
+	$output->addHTML( '
 	<tr>
 		<td class="input-label"><label for="noticelabel">' . $this->msg( 'networknotice-create-notice-label-label' )->text() . '</label></td>
 		<td class="input-container"><input type="text" name="noticelabel" id="noticelabel" value="' . $reqLabel . '"></td>
@@ -120,19 +188,9 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-text-helper' )->text() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="bgcolor">' . $this->msg( 'networknotice-create-notice-bgcolor-label' )->text() . '</label></td>
-		<td class="input-container"><select name="bgcolor" id="bgcolor" style="width: 165pt; ">' . $bgcolor_html . '</select></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bgcolor-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="bordercolor">' . $this->msg( 'networknotice-create-notice-bordercolor-label' )->text() . '</label></td>
-		<td class="input-container"><select name="bordercolor" id="bordercolor" style="width: 165pt; ">' . $bordercolor_html . '</select></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-bordercolor-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="fontcolor">' . $this->msg( 'networknotice-create-notice-fontcolor-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="fontcolor" id="fontcolor" value="' . $reqFontcolor . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-fontcolor-helper' )->text() . '</td>
+		<td class="input-label"><label for="style">' . $this->msg( 'networknotice-create-notice-style-label' )->text() . '</label></td>
+		<td class="input-container"><select name="style" id="style" style="width: 165pt; ">' . $style_html . '</select></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-style-helper' )->text() . '</td>
 	</tr>
 	<tr>
 		<td class="input-label"><label for="namespace">' . $this->msg( 'networknotice-create-notice-namespace-label' )->text() . '</label></td>
@@ -161,76 +219,94 @@ class SpecialNetworkNotice extends SpecialPage {
 	</tr>
 	<tr>
 		<td> </td>
-		<td colspan="2">
-			<input type="submit" name="createbutton" value="' . $this->msg( 'networknotice-create-notice-create-button' )->text() . '"> 
+		<td colspan="2">');
+		if ( $params[0] == "edit" ){
+			$output->addHTML( '
+			<input type="submit" name="updatebutton" value="' . $this->msg( 'networknotice-create-notice-update-button' )->text() . '"> ');
+		} else {
+			$output->addHTML( '
+			<input type="submit" name="createbutton" value="' . $this->msg( 'networknotice-create-notice-create-button' )->text() . '"> ');
+		}
+		$output->addHTML( '
 			<input type="submit" name="createpreviewbutton" value="' . $this->msg( 'networknotice-create-notice-preview-button' )->text() . '">
 		</td>
 	</tr>
 </table>
-</form>' );
-
+</form>
+');
+	
 
 		if ( $request->getBool( 'createbutton' ) ) {
 
 			$vars = array( 
 					'label' => $reqLabel,
 					'notice_text' => $reqText,
-					'bgcolor' => $reqBgcolor,
-					'bordercolor' => $reqBordercolor,
-					'fontcolor' => $reqFontcolor,
+					'style' => $reqStyle,
 					'namespace' => $reqNamespace,
 					'wiki' => $reqWiki,
 					'category' => $reqCategory,
-					'temporary' => $reqTemporary,
 					'prefix' => str_replace( '_', ' ', $reqPrefix ),
 					'action' => $reqAction
 				);
 
 			self::createNetworkNotice( $vars );
-		}
-		if ( $request->getBool( 'createpreviewbutton' ) ) {
+		} else if ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML('<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  '; color:' . $reqFontcolor . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
+			if ( $reqStyle == "default" ){
+				$output->addHTML('<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+			} else if ( $reqStyle == "inverse" ){
+				$output->addHTML('<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+			} else {
+				$output->addHTML('<div style="background-color:' . $styles[$reqStyle]['bgcolor'] .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . $styles[$reqStyle]['bordercolor']  .  '; color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
+			}
+		} else if ( $request->getBool( 'updatebutton' ) ) {
+				$vars = array( 
+					'label' => $reqLabel,
+					'notice_text' => $reqText,
+					'style' => $reqStyle,
+					'namespace' => $reqNamespace,
+					'wiki' => $reqWiki,
+					'category' => $reqCategory,
+					'prefix' => str_replace( '_', ' ', $reqPrefix ),
+					'action' => $reqAction
+				);
+			self::updateNetworkNotice( $vars, $reqNoticeid );
 		}
 
-		$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-delete-network-notice-heading' )->text() . '</span></h2>' );
 
 
-		if ( $request->getBool( 'deletebutton' ) ) {
 
-			self::deleteNetworkNotice( $reqId );
 
-		}
+		$output->addHTML( '<h2>' . $this->msg( 'networknotice-all-network-notices-heading' )->text() . '</h2>' );
+
 		$currentnotices = self::getNetworkNotices();
 
-
-		$temp_html = '';
-		foreach ( $currentnotices as $notice ) {
-			$temp_html .= '<option value="' . $notice->{'notice_id'} . '">' . $notice->{'label'} . '</option>';
+		$table = '{| class="wikitable sortable"' . "\n";
+		$table .= "|-\n!" . $this->msg( 'networknotice-column-id-label' )->text() . "\n!" . $this->msg( 'networknotice-column-name-label' )->text() . "\n!" . $this->msg( 'networknotice-column-elements-label' )->text() . "\n!" . $this->msg( 'networknotice-column-edit-label' )->text() . "\n!" . $this->msg( 'networknotice-column-delete-label' )->text() . "\n";
+		while( $row = $currentnotices->fetchRow() ) {
+			$table .= "|-\n|" . $row['notice_id'] . "\n|" . $row['label'] . 
+			"\n|<pre>" . 
+			$this->msg( 'networknotice-create-notice-text-label' )->text() . $row['notice_text'] . "\n" .
+			$this->msg( 'networknotice-create-notice-style-label' )->text() . $row['style'] . "\n";
+			if( $row['wiki'] ) {
+ 				$table .= $this->msg( 'networknotice-create-notice-wiki-label' )->text() . $row['wiki'] . "\n";
+			}
+			if( $row['category'] ) {
+ 				$table .= $this->msg( 'networknotice-create-notice-category-label' )->text() . $row['category'] . "\n";
+			}
+			if( $row['prefix'] ) {
+ 				$table .= $this->msg( 'networknotice-create-notice-prefix-label' )->text() . $row['prefix'] . "\n";
+			}
+			if( $row['namespace'] ) {
+ 				$table .= $this->msg( 'networknotice-create-notice-namespace-label' )->text() . $row['namespace'] . "\n";
+			}
+			if( $row['action'] ) {
+ 				$table .= $this->msg( 'networknotice-create-notice-action-label' )->text() . $row['action'] . "\n";
+			}
+			$table .= "</pre>\n|[[Special:NetworkNotice/edit/" . $row['notice_id'] . '|edit]]' . "\n|[[Special:NetworkNotice/delete/" . $row['notice_id'] . '|delete]]' . "\n";
 		}
-
-
-
-		$output->addHTML( '<form name="deleteform" id="deleteform" method="post" action="#Delete_network_notice">
-<table>
-	<tr>
-		<td class="input-label"><label for="noticedelete">' . $this->msg( 'networknotice-delete-notice-text-label' )->text() . '</label></td>
-		<td class="input-container"><select name="noticedelete" id="noticedelete" style="width: 300pt; ">' . $temp_html . '</select></td>
-	</tr>
-	<tr>
-		<td> </td>
-		<td colspan="2">
-			<input type="submit" name="deletebutton" value="' . $this->msg( 'networknotice-delete-notice-delete-button' )->text() . '"> 
-		</td>
-	</tr>
-</table>
-</form>');
-		
-		if ( $request->getBool( 'deleteviewbutton' ) ) {
-			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML( '<div style="background-color:' . $reqBgcolor .  '; margin-top:3px border-color:' . $reqBordercolor .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $reqBordercolor  .  ';">' . $reqText  . '</div>' );
-		}
-		
+		$table .= '|}';
+		$output->addWikiText( $table );
 
 	}
 
