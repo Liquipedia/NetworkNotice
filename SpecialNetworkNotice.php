@@ -78,7 +78,6 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqAction	 	= $request->getText( 'action' );
 
 
-
 		$styles = [
 						"default" => array(
 							"bordercolor"=>"default",
@@ -253,9 +252,9 @@ class SpecialNetworkNotice extends SpecialPage {
 		} else if ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
 			if ( $reqStyle == "default" ){
-				$output->addHTML('<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+				$output->addHTML('<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
 			} else if ( $reqStyle == "inverse" ){
-				$output->addHTML('<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+				$output->addHTML('<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
 			} else {
 				$output->addHTML('<div style="background-color:' . $styles[$reqStyle]['bgcolor'] .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . $styles[$reqStyle]['bordercolor']  .  '; color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
 			}

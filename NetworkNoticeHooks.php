@@ -65,9 +65,9 @@ class NetworkNoticeHooks {
 
 		global $wgOut;
 		if ( $row->{'style'} == "default" ){
-				echo '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . self::$styles[$row->{'style'}]['fontcolor'] . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div></div>';
+				echo '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid; color:' . self::$styles[$row->{'style'}]['fontcolor'] . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 		} else if ( $row->{'style'} == "inverse" ){
-				echo '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid;"> <div style="color:' . self::$styles[$row->{'style'}]['fontcolor'] . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div></div>';
+				echo '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid; color:' . self::$styles[$row->{'style'}]['fontcolor'] . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 		} else {
 				echo '<div style="background-color:' . self::$styles[$row->{'style'}]['bgcolor'] .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . self::$styles[$row->{'style'}]['bordercolor']  .  '; color:' . self::$styles[$row->{'style'}]['fontcolor'] . ';">' . $wgOut->parseInline(  $row->{'notice_text'} ) . '</div>';
 		}
