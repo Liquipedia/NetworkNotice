@@ -67,69 +67,24 @@ class SpecialNetworkNotice extends SpecialPage {
 		global $wgUser;
 		global $wgOut;
 
+
+		
+
 		$reqNoticeid	= $request->getText( 'noticeid' );
-		$reqLabel      	= $request->getText( 'noticelabel' );
-		$reqText      	= $request->getText( 'noticetext' );
-		$reqStyle		= $request->getText( 'style' );
-		$reqNamespace   = $request->getText( 'namespace' );
-		$reqWiki 		= $request->getText( 'wiki' );
-		$reqCategory 	= $request->getText( 'category' );
-		$reqPrefix	 	= $request->getText( 'prefix' );
-		$reqAction	 	= $request->getText( 'action' );
+		$reqLabel		= $request->getText( 'noticelabel' );
+		$reqText		= $request->getText( 'noticetext' );
+		if( in_array($request->getText( 'style' ), NetworkNoticeColors::getNoticeColors() ) ){
+			$reqStyle	= $request->getText( 'style' );
+		} else {
+			$reqStyle	= 'default';
+		}
+		$reqNamespace	= $request->getText( 'namespace' );
+		$reqWiki		= $request->getText( 'wiki' );
+		$reqCategory	= $request->getText( 'category' );
+		$reqPrefix		= $request->getText( 'prefix' );
+		$reqAction		= $request->getText( 'action' );
 
 
-		$styles = [
-						"default" => array(
-							"bordercolor"=>"default",
-							"bgcolor"=>"default",
-							"fontcolor"=>"#444444",
-										),
-						"inverse" => array(
-							"bordercolor"=>"inverse",
-							"bgcolor"=>"inverse",
-							"fontcolor"=>"white",
-										),
-						"red" => array(
-							"bordercolor"=>"#ff0000",
-							"bgcolor"=>"#ffcccc",
-							"fontcolor"=>"#444444",
-										),
-						"green" => array(
-							"bordercolor"=>"#00ff00",
-							"bgcolor"=>"#ccffcc",
-							"fontcolor"=>"#444444",
-										),
-						"blue" => array(
-							"bordercolor"=>"#0000ff",
-							"bgcolor"=>"#ccccff",
-							"fontcolor"=>"#444444",
-										),
-						"yellow" => array(
-							"bordercolor"=>"#ffff00",
-							"bgcolor"=>"#ffffcc",
-							"fontcolor"=>"#444444",
-										),
-						"purple" => array(
-							"bordercolor"=>"#ff00ff",
-							"bgcolor"=>"#ffccff",
-							"fontcolor"=>"#444444",
-										),
-						"turquoise" => array(
-							"bordercolor"=>"#00ffff",
-							"bgcolor"=>"#ccffff",
-							"fontcolor"=>"#444444",
-										),
-						"light grey" => array(
-							"bordercolor"=>"#333333",
-							"bgcolor"=>"#cccccc",
-							"fontcolor"=>"#444444",
-										),
-						"dark grey" => array(
-							"bordercolor"=>"#000000",
-							"bgcolor"=>"#eeeeee",
-							"fontcolor"=>"#444444",
-										),
-		];
 		if ( $params[0] == "edit" && isset( $params[1] ) && !empty( $params[1] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' )){
 
 			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-edit-network-notice-heading' )->text() . '</span></h2>' );
@@ -157,7 +112,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
 
 		$style_html = '';
-		foreach ( array_keys( $styles ) as $color ) {
+		foreach ( NetworkNoticeColors::getNoticeColors() as $color ) {
 			if ( $color == $reqStyle ) {
 				$style_html .= '<option selected="selected" value="' . $color . '">' . $color . '</option>';
 			} else {
@@ -252,11 +207,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		} else if ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
 			if ( $reqStyle == "default" ){
-				$output->addHTML('<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+				$output->addHTML('<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($reqStyle, 'fontcolor') . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
 			} else if ( $reqStyle == "inverse" ){
-				$output->addHTML('<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px border-left-style:solid;"> <div style="color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div></div>' );
+				$output->addHTML('<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($reqStyle, 'fontcolor') . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
 			} else {
-				$output->addHTML('<div style="background-color:' . $styles[$reqStyle]['bgcolor'] .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . $styles[$reqStyle]['bordercolor']  .  '; color:' . $styles[$reqStyle]['fontcolor'] . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
+				$output->addHTML('<div style="background-color:' . NetworkNoticeColors::getNoticeColorValues($reqStyle, 'bgcolor') .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues($reqStyle, 'bordercolor')  .  '; color:' . NetworkNoticeColors::getNoticeColorValues($reqStyle, 'fontcolor') . ';">' . $wgOut->parseInline( $reqText ) . '</div>' );
 			}
 		} else if ( $request->getBool( 'updatebutton' ) ) {
 				$vars = array( 
