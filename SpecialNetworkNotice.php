@@ -32,7 +32,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		global $wgDBname;
 		$dbr = wfGetDB( DB_MASTER, '', $wgDBname);
 		$tablename = 'networknotice';
-		return $dbr->select( $tablename, array('notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action' ));
+		return $dbr->select( $tablename, array('notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action', 'disabled' ));
 
 	}
 
@@ -83,6 +83,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqCategory	= $request->getText( 'category' );
 		$reqPrefix		= $request->getText( 'prefix' );
 		$reqAction		= $request->getText( 'action' );
+		$reqDisabled	= $request->getBool( 'disabled' );
 
 
 		if ( $params[0] == "edit" && isset( $params[1] ) && !empty( $params[1] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' )){
@@ -91,14 +92,15 @@ class SpecialNetworkNotice extends SpecialPage {
 			while ( $row = $currentnotices->fetchRow() ){
 				if ( $row['notice_id'] ==  $params[1] ){
 					$reqNoticeid	= $row['notice_id'];
-					$reqLabel      	= $row['label'];
-					$reqText      	= $row['notice_text'];
-					$reqStyle  		= $row['style']; 
-					$reqNamespace   = $row['namespace'];
-					$reqWiki 		= $row['wiki'];
-					$reqCategory 	= $row['category'];
-					$reqPrefix	 	= $row['prefix'];
-					$reqAction	 	= $row['action'];
+					$reqLabel		= $row['label'];
+					$reqText		= $row['notice_text'];
+					$reqStyle		= $row['style']; 
+					$reqNamespace	= $row['namespace'];
+					$reqWiki		= $row['wiki'];
+					$reqCategory	= $row['category'];
+					$reqPrefix		= $row['prefix'];
+					$reqAction		= $row['action'];
+					$reqDisabled	= $row['disabled'];
 				}
 			}
 		} else {
@@ -172,6 +174,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-action-helper' )->text() . '</td>
 	</tr>
 	<tr>
+		<td class="input-label"><label for="disabled">' . $this->msg( 'networknotice-create-notice-disable-label' )->text() . '</label></td>
+		<td class="input-container"><input type="checkbox" name="disabled" id="disabled" value="disabled" ' . ($reqDisabled ? 'checked' : '') . '></td>
+		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-disable-helper' )->text() . '</td>
+	</tr>
+	<tr>
 		<td> </td>
 		<td colspan="2">');
 		if ( $params[0] == "edit" ){
@@ -193,14 +200,15 @@ class SpecialNetworkNotice extends SpecialPage {
 		if ( $request->getBool( 'createbutton' ) ) {
 
 			$vars = array( 
-					'label' => $reqLabel,
-					'notice_text' => $reqText,
-					'style' => $reqStyle,
-					'namespace' => $reqNamespace,
-					'wiki' => $reqWiki,
-					'category' => $reqCategory,
-					'prefix' => str_replace( '_', ' ', $reqPrefix ),
-					'action' => $reqAction
+				'label' => $reqLabel,
+				'notice_text' => $reqText,
+				'style' => $reqStyle,
+				'namespace' => $reqNamespace,
+				'wiki' => $reqWiki,
+				'category' => $reqCategory,
+				'prefix' => str_replace( '_', ' ', $reqPrefix ),
+				'action' => $reqAction,
+				'disabled' => $reqDisabled
 				);
 
 			self::createNetworkNotice( $vars );
@@ -222,7 +230,8 @@ class SpecialNetworkNotice extends SpecialPage {
 					'wiki' => $reqWiki,
 					'category' => $reqCategory,
 					'prefix' => str_replace( '_', ' ', $reqPrefix ),
-					'action' => $reqAction
+					'action' => $reqAction,
+					'disabled' => $reqDisabled
 				);
 			self::updateNetworkNotice( $vars, $reqNoticeid );
 		}
@@ -236,7 +245,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$currentnotices = self::getNetworkNotices();
 
 		$table = '{| class="wikitable sortable"' . "\n";
-		$table .= "|-\n!" . $this->msg( 'networknotice-column-id-label' )->text() . "\n!" . $this->msg( 'networknotice-column-name-label' )->text() . "\n!" . $this->msg( 'networknotice-column-elements-label' )->text() . "\n!" . $this->msg( 'networknotice-column-edit-label' )->text() . "\n!" . $this->msg( 'networknotice-column-delete-label' )->text() . "\n";
+		$table .= "|-\n!" . $this->msg( 'networknotice-column-id-label' )->text() . "\n!" . $this->msg( 'networknotice-column-name-label' )->text() . "\n!" . $this->msg( 'networknotice-column-elements-label' )->text() . "\n!" . $this->msg( 'networknotice-column-disabled-label' )->text() . "\n!" . $this->msg( 'networknotice-column-edit-label' )->text() . "\n!" . $this->msg( 'networknotice-column-delete-label' )->text() . "\n";
 		while( $row = $currentnotices->fetchRow() ) {
 			$table .= "|-\n|" . $row['notice_id'] . "\n|" . $row['label'] . 
 			"\n|<pre>" . 
@@ -257,7 +266,7 @@ class SpecialNetworkNotice extends SpecialPage {
 			if( $row['action'] ) {
  				$table .= $this->msg( 'networknotice-create-notice-action-label' )->text() . $row['action'] . "\n";
 			}
-			$table .= "</pre>\n|[[Special:NetworkNotice/edit/" . $row['notice_id'] . '|edit]]' . "\n|[[Special:NetworkNotice/delete/" . $row['notice_id'] . '|delete]]' . "\n";
+			$table .= "</pre>\n|" . ($row['disabled'] ? "true" : "false") . "\n|[[Special:NetworkNotice/edit/" . $row['notice_id'] . '|edit]]' . "\n|[[Special:NetworkNotice/delete/" . $row['notice_id'] . '|delete]]' . "\n";
 		}
 		$table .= '|}';
 		$output->addWikiText( $table );

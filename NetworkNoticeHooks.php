@@ -19,8 +19,6 @@ class NetworkNoticeHooks {
 				echo '<div style="background-color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'bgcolor') .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues($row->{'style'},'bordercolor')  .  '; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline(  $row->{'notice_text'} ) . '</div>';
 		}
 
-		//echo '<div style="background-color:' . $row->{'bgcolor'}  .  '; margin-top:10px; border-color:' . $row->{'bordercolor'}  .  '; display:block; text-align:center; padding:5px; margin-bottom:20px; color:#444444; border-left:5px solid ' . $row->{'bordercolor'}  .  '; color:' . $row->{'fontcolor'} . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
-
 	}
 
 	public static function onLiquiFlowNetworkNotice( $context ) {
@@ -55,7 +53,8 @@ class NetworkNoticeHooks {
 		$res = $dbr->select( $tablename, array( 'notice_text', 'style', 'category', 'prefix' ), 
 			'(`namespace` = "' . $namespace . '" OR `namespace` = "") AND 
 			 (`wiki` = "' . $wiki . '" OR `wiki` = "") AND 
-			 (`action` = "' . $action . '" OR `action` = "")' );
+			 (`action` = "' . $action . '" OR `action` = "") AND 
+			 (`disabled` = 0)' );
 
 
 		foreach ( $res as $row ) {

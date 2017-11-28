@@ -35,6 +35,8 @@
 	"networknotice-create-notice-prefix-helper": "e.g. \"The International/\" or leave empty to ignore.",
 	"networknotice-create-notice-action-label": "Action:",
 	"networknotice-create-notice-action-helper": "e.g. \"protect\" or \"delete\" leave empty to ignore.",
+	"networknotice-create-notice-disable-helper": "Disable the notice, so it will no longer be loaded on pages.",
+	"networknotice-create-notice-disable-label": "Disable:",
 	"networknotice-create-notice-create-button": "Create",
 	"networknotice-create-notice-preview-button": "Preview",
 	"networknotice-create-notice-update-button": "Update",
@@ -48,6 +50,7 @@
 	"networknotice-column-id-label": "ID",
 	"networknotice-column-name-label": "Name",
 	"networknotice-column-elements-label": "Elements",
+	"networknotice-column-disabled-label": "Disabled",
 	"networknotice-column-edit-label": "Edit",
 	"networknotice-column-delete-label": "Delete",
 
