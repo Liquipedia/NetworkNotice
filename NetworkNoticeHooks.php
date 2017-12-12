@@ -12,11 +12,11 @@ class NetworkNoticeHooks {
 
 		global $wgOut;
 		if ( $row->{'style'} == "default" ){
-				echo '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
+				echo '<div class="bgc-light bdc-dark" id="networknotice-' . $row->{'notice_id'} . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 		} else if ( $row->{'style'} == "inverse" ){
-				echo '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
+				echo '<div class="bgc-dark bdc-light" id="networknotice-' . $row->{'notice_id'} . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline( $row->{'notice_text'} ) . '</div>';
 		} else {
-				echo '<div style="background-color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'bgcolor') .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues($row->{'style'},'bordercolor')  .  '; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline(  $row->{'notice_text'} ) . '</div>';
+				echo '<div id="networknotice-' . $row->{'notice_id'} . '" style="background-color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'bgcolor') .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues($row->{'style'},'bordercolor')  .  '; color:' . NetworkNoticeColors::getNoticeColorValues($row->{'style'}, 'fontcolor') . ';">' . $wgOut->parseInline(  $row->{'notice_text'} ) . '</div>';
 		}
 
 	}
@@ -50,7 +50,7 @@ class NetworkNoticeHooks {
 		}
 
 		//do wiki and namespace checks in DB query
-		$res = $dbr->select( $tablename, array( 'notice_text', 'style', 'category', 'prefix' ), 
+		$res = $dbr->select( $tablename, array( 'notice_text', 'style', 'category', 'prefix', 'notice_id' ), 
 			'(`namespace` = "' . $namespace . '" OR `namespace` = "") AND 
 			 (`wiki` = "' . $wiki . '" OR `wiki` = "") AND 
 			 (`action` = "' . $action . '" OR `action` = "") AND 
