@@ -1,13 +1,15 @@
 <?php
 
-class NetworkNoticeHooks {
+namespace Liquipedia\NetworkNotice;
+
+class Hooks {
 	private static function echoNotice( $out, $row ) {
 		if( $row->style == 'default' ) {
-				echo '<div class="bgc-light bdc-dark" id="networknotice-' . $row->notice_id . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
+				echo '<div class="bgc-light bdc-dark" id="networknotice-' . $row->notice_id . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
 		} elseif( $row->style == 'inverse' ) {
-				echo '<div class="bgc-dark bdc-light" id="networknotice-' . $row->notice_id . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
+				echo '<div class="bgc-dark bdc-light" id="networknotice-' . $row->notice_id . '" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
 		} else {
-				echo '<div id="networknotice-' . $row->notice_id . '" style="background-color:' . NetworkNoticeColors::getNoticeColorValues( $row->style, 'bgcolor' ) . '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues( $row->style,'bordercolor' ) . '; color:' . NetworkNoticeColors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
+				echo '<div id="networknotice-' . $row->notice_id . '" style="background-color:' . Colors::getNoticeColorValues( $row->style, 'bgcolor' ) . '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . Colors::getNoticeColorValues( $row->style,'bordercolor' ) . '; color:' . Colors::getNoticeColorValues( $row->style, 'fontcolor' ) . ';">' . $out->parseInline( $row->notice_text ) . '</div>';
 		}
 	}
 
@@ -19,10 +21,10 @@ class NetworkNoticeHooks {
 		$dbr = wfGetDB( DB_REPLICA, '', $config->get( 'DBname' ) );
 
 		$categories = $out->getCategories();
-		$namespace = MWNamespace::getCanonicalName( $title->getNamespace() );
+		$namespace = \MWNamespace::getCanonicalName( $title->getNamespace() );
 		$wiki = substr( $config->get( 'ScriptPath' ), 1 );  //Remove leading '/'
 		$pagetitle = $title->getText();
-		$action = Action::getActionName( $context );
+		$action = \Action::getActionName( $context );
 
 		$movepage = 'Special:MovePage';
 		if( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {

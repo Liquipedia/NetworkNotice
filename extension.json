@@ -18,20 +18,20 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"NetworkNoticeAlias": "NetworkNoticeAlias.php"
+		"NetworkNoticeAlias": "i18n/NetworkNoticeAlias.php"
 	},
 	"AutoloadClasses": {
-		"NetworkNoticeColors": "NetworkNoticeColors.php",
-		"NetworkNoticeHooks": "NetworkNoticeHooks.php",
-		"SpecialNetworkNotice": "SpecialNetworkNotice.php"
+		"Liquipedia\\NetworkNotice\\Colors": "NetworkNoticeColors.php",
+		"Liquipedia\\NetworkNotice\\Hooks": "NetworkNoticeHooks.php",
+		"Liquipedia\\NetworkNotice\\SpecialNetworkNotice": "SpecialNetworkNotice.php"
 	},
 	"Hooks": {
 		"LiquiFlowNetworkNotice": [
-			"NetworkNoticeHooks::onLiquiFlowNetworkNotice"
+			"Liquipedia\\NetworkNotice\\Hooks::onLiquiFlowNetworkNotice"
 		]
 	},
 	"SpecialPages": {
-		"NetworkNotice": "SpecialNetworkNotice"
+		"NetworkNotice": "Liquipedia\\NetworkNotice\\SpecialNetworkNotice"
 	},
 	"ResourceModules": {
 		"ext.networknotice.SpecialPage": {

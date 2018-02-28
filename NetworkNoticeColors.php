@@ -1,6 +1,8 @@
 <?php
 
-class NetworkNoticeColors {
+namespace Liquipedia\NetworkNotice;
+
+class Colors {
 
 	private static $styles = [
 		'default' => array(

@@ -1,6 +1,8 @@
 <?php
 
-class SpecialNetworkNotice extends SpecialPage {
+namespace Liquipedia\NetworkNotice;
+
+class SpecialNetworkNotice extends \SpecialPage {
 	
 	public function __construct() {
 		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
@@ -53,7 +55,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$reqNoticeid	= $request->getText( 'noticeid' );
 		$reqLabel		= $request->getText( 'noticelabel' );
 		$reqText		= $request->getText( 'noticetext' );
-		if( in_array($request->getText( 'style' ), NetworkNoticeColors::getNoticeColors() ) ) {
+		if( in_array($request->getText( 'style' ), Colors::getNoticeColors() ) ) {
 			$reqStyle	= $request->getText( 'style' );
 		} else {
 			$reqStyle	= 'default';
@@ -90,7 +92,7 @@ class SpecialNetworkNotice extends SpecialPage {
 		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
 
 		$style_html = '';
-		foreach( NetworkNoticeColors::getNoticeColors() as $color ) {
+		foreach( Colors::getNoticeColors() as $color ) {
 			if( $color == $reqStyle ) {
 				$style_html .= '<option selected="selected" value="' . $color . '">' . $color . '</option>';
 			} else {
@@ -190,11 +192,11 @@ class SpecialNetworkNotice extends SpecialPage {
 		} elseif( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
 			if( $reqStyle == "default" ) {
-				$output->addHTML( '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
 			} elseif( $reqStyle == "inverse" ) {
-				$output->addHTML( '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . NetworkNoticeColors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
 			} else {
-				$output->addHTML( '<div style="background-color:' . NetworkNoticeColors::getNoticeColorValues( $reqStyle, 'bgcolor' ) .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . NetworkNoticeColors::getNoticeColorValues( $reqStyle, 'bordercolor' )  .  '; color:' . NetworkNoticeColors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div style="background-color:' . Colors::getNoticeColorValues( $reqStyle, 'bgcolor' ) .  '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . Colors::getNoticeColorValues( $reqStyle, 'bordercolor' )  .  '; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
 			}
 		} elseif( $request->getBool( 'updatebutton' ) ) {
 				$vars = array( 
@@ -210,10 +212,6 @@ class SpecialNetworkNotice extends SpecialPage {
 				);
 			$this->updateNetworkNotice( $vars, $reqNoticeid );
 		}
-
-
-
-
 
 		$output->addHTML( '<h2>' . $this->msg( 'networknotice-all-network-notices-heading' )->text() . '</h2>' );
 
