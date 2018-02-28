@@ -1,15 +1,16 @@
 {
 	"name": "NetworkNotice",
-	"version": "0.1",
+	"version": "1.1",
 	"author": [
-		"Tephus"
+		"Tephus",
+		"[http://fo-nttax.de Alex Winkler]"
 	],
 	"url": "http://liquipedia.net/",
 	"descriptionmsg": "networknotice-desc",
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.25.0"
+		"MediaWiki": ">= 1.28.0"
 	},
 	"MessagesDirs": {
 		"NetworkNotice": [
@@ -28,7 +29,6 @@
 		"LiquiFlowNetworkNotice": [
 			"NetworkNoticeHooks::onLiquiFlowNetworkNotice"
 		]
-
 	},
 	"SpecialPages": {
 		"NetworkNotice": "SpecialNetworkNotice"
@@ -49,7 +49,6 @@
 		"sysop": {
 			"usenetworknotice": true
 		}
-
 	},
 	"AvailableRights": [
 		"usenetworknotice"

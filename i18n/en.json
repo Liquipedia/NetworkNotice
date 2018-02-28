@@ -6,6 +6,7 @@
 	},
 
 	"action-usenetworknotice": "create or modify network notices",
+	"specialpages-group-liquipedia": "Liquipedia",
 
 	"networknotice": "Network notice",
 	"networknotice-desc": "Allows staff to create more full featured site notices, network wide.",
@@ -15,8 +16,6 @@
 	"networknotice-delete-network-notice-heading": "Delete network notice",
 	"networknotice-preview-heading": "Preivew",
 	"networknotice-delete-network-notice-deletion-heading": "Confirm deletion",
-
-
 
 	"networknotice-create-notice-desc": "Creates network notices (site notices) that can be displayed network wide, with more features than standard site notices.",
 	"networknotice-create-notice-label-label": "Label:",
@@ -44,7 +43,6 @@
 	"networknotice-edit-notice-id-label": "Notice ID:",
 	"networknotice-edit-notice-id-helper": "Currently editing this notice.",
 
-
 	"networknotice-all-network-notices-heading": "All Network Notices",
 
 	"networknotice-column-id-label": "ID",
@@ -52,10 +50,5 @@
 	"networknotice-column-elements-label": "Elements",
 	"networknotice-column-disabled-label": "Disabled",
 	"networknotice-column-edit-label": "Edit",
-	"networknotice-column-delete-label": "Delete",
-
-
-
-
-	"specialpages-group-liquipedia": "Liquipedia"
+	"networknotice-column-delete-label": "Delete"
 }
