@@ -24,7 +24,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	}
 
 	public function getNetworkNotices() {
-		$dbr = wfGetDB( DB_REPLICA, array(), $this->getConfig()->get( 'DBname' ));
+		$dbr = wfGetDB( DB_REPLICA, array(), $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select( 'networknotice', array( 'notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action', 'disabled' ) );
 
 	}
