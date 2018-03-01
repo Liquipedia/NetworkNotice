@@ -3,7 +3,7 @@
 namespace Liquipedia\NetworkNotice;
 
 class SpecialNetworkNotice extends \SpecialPage {
-	
+
 	public function __construct() {
 		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
 	}
@@ -66,7 +66,6 @@ class SpecialNetworkNotice extends \SpecialPage {
 		$reqPrefix		= $request->getText( 'prefix' );
 		$reqAction		= $request->getText( 'action' );
 		$reqDisabled	= $request->getBool( 'disabled' );
-
 
 		if( $params[0] == "edit" && isset( $params[1] ) && !empty( $params[1] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' )) {
 
