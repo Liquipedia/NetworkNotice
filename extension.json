@@ -42,8 +42,8 @@
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "",
-		"remoteExtPath": "NetworkNotice"
+		"localBasePath": "resources",
+		"remoteExtPath": "NetworkNotice/resources"
 	},
 	"GroupPermissions": {
 		"sysop": {
