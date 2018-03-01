@@ -18,7 +18,7 @@ class Hooks {
 		$title = $context->getTitle();
 		$out = $context->getOutput();
 
-		$dbr = wfGetDB( DB_REPLICA, '', $config->get( 'DBname' ) );
+		$dbr = wfGetDB( DB_REPLICA, array(), $config->get( 'DBname' ) );
 
 		$categories = $out->getCategories();
 		$namespace = \MWNamespace::getCanonicalName( $title->getNamespace() );

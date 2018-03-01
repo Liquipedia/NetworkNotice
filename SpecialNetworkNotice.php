@@ -13,12 +13,12 @@ class SpecialNetworkNotice extends \SpecialPage {
 	}
 
 	public function createNetworkNotice( $vars ) {
-		$dbr = wfGetDB( DB_MASTER, '', $this->getConfig()->get( 'DBname' ) );
+		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
 		$dbr->insert( 'networknotice', $vars );
 	}
 
 	public function updateNetworkNotice( $vars, $id ) {
-		$dbr = wfGetDB( DB_MASTER, '', $this->getConfig()->get( 'DBname' ) );
+		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
 		$dbr->update( 'networknotice', $vars, array( 'notice_id' => $id ) );
 
 	}
@@ -30,7 +30,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	}
 
 	public function deleteNetworkNotice( $var ) {
-		$dbr = wfGetDB( DB_MASTER, '', $this->getConfig()->get( 'DBname' ) );
+		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
 		return $dbr->delete( 'networknotice', array( 'notice_id' => $var ) );
 
 	}
