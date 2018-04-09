@@ -13,26 +13,23 @@ class SpecialNetworkNotice extends \SpecialPage {
 	}
 
 	public function createNetworkNotice( $vars ) {
-		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
-		$dbr->insert( 'networknotice', $vars );
+		$dbw = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
+		$dbw->insert( 'networknotice', $vars );
 	}
 
 	public function updateNetworkNotice( $vars, $id ) {
-		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
-		$dbr->update( 'networknotice', $vars, array( 'notice_id' => $id ) );
-
+		$dbw = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
+		$dbw->update( 'networknotice', $vars, array( 'notice_id' => $id ) );
 	}
 
 	public function getNetworkNotices() {
 		$dbr = wfGetDB( DB_REPLICA, array(), $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select( 'networknotice', array( 'notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action', 'disabled' ) );
-
 	}
 
 	public function deleteNetworkNotice( $var ) {
-		$dbr = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
-		return $dbr->delete( 'networknotice', array( 'notice_id' => $var ) );
-
+		$dbw = wfGetDB( DB_MASTER, array(), $this->getConfig()->get( 'DBname' ) );
+		return $dbw->delete( 'networknotice', array( 'notice_id' => $var ) );
 	}
 
 	public function execute( $par ) {
