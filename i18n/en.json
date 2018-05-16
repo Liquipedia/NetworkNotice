@@ -7,6 +7,7 @@
 
 	"action-usenetworknotice": "create or modify network notices",
 	"specialpages-group-liquipedia": "Liquipedia",
+	"right-usenetworknotice": "Use the Special:NetworkNotice page",
 
 	"networknotice": "Network notice",
 	"networknotice-desc": "Allows staff to create more full featured site notices, network wide.",
