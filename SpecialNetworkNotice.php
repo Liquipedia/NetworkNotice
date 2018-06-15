@@ -188,11 +188,11 @@ class SpecialNetworkNotice extends \SpecialPage {
 		} elseif ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
 			if ( $reqStyle == "default" ) {
-				$output->addHTML( '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );
 			} elseif ( $reqStyle == "inverse" ) {
-				$output->addHTML( '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );
 			} else {
-				$output->addHTML( '<div style="background-color:' . Colors::getNoticeColorValues( $reqStyle, 'bgcolor' ) . '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . Colors::getNoticeColorValues( $reqStyle, 'bordercolor' ) . '; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText ) . '</div>' );
+				$output->addHTML( '<div style="background-color:' . Colors::getNoticeColorValues( $reqStyle, 'bgcolor' ) . '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:20px; border-left:5px solid ' . Colors::getNoticeColorValues( $reqStyle, 'bordercolor' ) . '; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );
 			}
 		} elseif ( $request->getBool( 'updatebutton' ) ) {
 			$vars = [
