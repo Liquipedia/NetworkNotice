@@ -26,9 +26,6 @@
 		"Liquipedia\\NetworkNotice\\SpecialNetworkNotice": "SpecialNetworkNotice.php"
 	},
 	"Hooks": {
-		"BruinenNetworkNotice": [
-			"Liquipedia\\NetworkNotice\\Hooks::onBruinenNetworkNotice"
-		], 
 		"LiquiFlowNetworkNotice": [
 			"Liquipedia\\NetworkNotice\\Hooks::onLiquiFlowNetworkNotice"
 		]
