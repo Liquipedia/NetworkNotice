@@ -14,7 +14,7 @@ class Hooks {
 		}
 	}
 
-	public static function onLiquiFlowNetworkNotice( $context ) {
+	public static function onBruinenNetworkNotice( $context ) {
 		$config = $context->getConfig();
 		$title = $context->getTitle();
 		$out = $context->getOutput();
