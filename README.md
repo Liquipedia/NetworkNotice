@@ -10,8 +10,4 @@ Installation
 
 	`wfLoadExtension( 'NetworkNotice' );`
 
-* Add hook to skin in appropriate place:
-	
-	`<?php Hooks::run( 'LiquiFlowNetworkNotice' ); ?>`
-
 * Add table to DB (can import from networknotice.sql).

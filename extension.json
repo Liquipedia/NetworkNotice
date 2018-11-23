@@ -1,6 +1,6 @@
 {
 	"name": "NetworkNotice",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"author": [
 		"Tephus",
 		"[https://fo-nttax.de Alex Winkler]"
@@ -26,11 +26,8 @@
 		"Liquipedia\\NetworkNotice\\SpecialNetworkNotice": "SpecialNetworkNotice.php"
 	},
 	"Hooks": {
-		"BruinenNetworkNotice": [
-			"Liquipedia\\NetworkNotice\\Hooks::onBruinenNetworkNotice"
-		], 
-		"LiquiFlowNetworkNotice": [
-			"Liquipedia\\NetworkNotice\\Hooks::onBruinenNetworkNotice"
+		"SiteNoticeAfter": [
+			"Liquipedia\\NetworkNotice\\Hooks::onSiteNoticeAfter"
 		]
 	},
 	"SpecialPages": {
