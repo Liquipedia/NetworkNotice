@@ -43,7 +43,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 		$request = $this->getRequest();
 		$params = explode( '/', $par );
 
-		if ( $params[ 0 ] == 'delete' && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) ) {
+		if ( $params[ 0 ] === 'delete' && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) ) {
 			$this->deleteNetworkNotice( $params[ 1 ] );
 		}
 
@@ -64,7 +64,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 		$reqAction = $request->getText( 'action' );
 		$reqDisabled = $request->getBool( 'disabled' );
 
-		if ( $params[ 0 ] == "edit" && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' ) ) {
+		if ( $params[ 0 ] === 'edit' && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' ) ) {
 
 			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-edit-network-notice-heading' )->text() . '</span></h2>' );
 			while ( $row = $currentnotices->fetchRow() ) {
@@ -89,7 +89,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 
 		$style_html = '';
 		foreach ( Colors::getNoticeColors() as $color ) {
-			if ( $color == $reqStyle ) {
+			if ( $color === $reqStyle ) {
 				$style_html .= '<option selected="selected" value="' . $color . '">' . $color . '</option>';
 			} else {
 				$style_html .= '<option value="' . $color . '">' . $color . '</option>';
@@ -98,7 +98,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 
 		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice">
 <table>' );
-		if ( $params[ 0 ] == "edit" ) {
+		if ( $params[ 0 ] === 'edit' ) {
 			$output->addHTML( '
 	<tr>
 		<td class="input-label"><label for="noticeid">' . $this->msg( 'networknotice-edit-notice-id-label' )->text() . '</label></td>
@@ -155,7 +155,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	<tr>
 		<td> </td>
 		<td colspan="2">' );
-		if ( $params[ 0 ] == 'edit' ) {
+		if ( $params[ 0 ] === 'edit' ) {
 			$output->addHTML( '
 			<input type="submit" name="updatebutton" value="' . $this->msg( 'networknotice-create-notice-update-button' )->text() . '"> ' );
 		} else {
@@ -187,9 +187,9 @@ class SpecialNetworkNotice extends \SpecialPage {
 			$this->createNetworkNotice( $vars );
 		} elseif ( $request->getBool( 'createpreviewbutton' ) ) {
 			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			if ( $reqStyle == "default" ) {
+			if ( $reqStyle === 'default' ) {
 				$output->addHTML( '<div class="bgc-light bdc-dark" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:7px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );
-			} elseif ( $reqStyle == "inverse" ) {
+			} elseif ( $reqStyle === 'inverse' ) {
 				$output->addHTML( '<div class="bgc-dark bdc-light" style="margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:7px; border-left-width:5px; border-left-style:solid; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );
 			} else {
 				$output->addHTML( '<div style="background-color:' . Colors::getNoticeColorValues( $reqStyle, 'bgcolor' ) . '; margin-top:3px; display:block; text-align:center; padding:5px; margin-bottom:7px; border-left:5px solid ' . Colors::getNoticeColorValues( $reqStyle, 'bordercolor' ) . '; color:' . Colors::getNoticeColorValues( $reqStyle, 'fontcolor' ) . ';">' . $output->parseInline( $reqText, false ) . '</div>' );

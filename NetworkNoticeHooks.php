@@ -23,14 +23,14 @@ class Hooks {
 
 		$categories = $out->getCategories();
 		$namespace = \MWNamespace::getCanonicalName( $title->getNamespace() );
-		$wiki = substr( $config->get( 'ScriptPath' ), 1 );  //Remove leading '/'
+		$wiki = substr( $config->get( 'ScriptPath' ), 1 );  // Remove leading '/'
 		$pagetitle = $title->getText();
 		$action = \Action::getActionName( $skin );
 
 		$movepage = 'Special:MovePage';
 		if ( strncmp( $pagetitle, $movepage, strlen( $movepage ) ) === 0 ) {
 			$action = 'move';
-		} elseif ( $action == 'edit' && !$title->exists() ) {
+		} elseif ( $action === 'edit' && !$title->exists() ) {
 			$action = 'create';
 		}
 
@@ -46,11 +46,11 @@ class Hooks {
 				continue;
 			}
 			// Finally, check categories
-			if ( $row->category == '' ) {
+			if ( empty( $row->category ) ) {
 				$siteNotice .= self::getNoticeHTML( $out, $row );
 			} else {
 				foreach ( $categories as $category ) {
-					if ( $category == $row->category ) {
+					if ( $category === $row->category ) {
 						$siteNotice .= self::getNoticeHTML( $out, $row );
 						break;
 					}
