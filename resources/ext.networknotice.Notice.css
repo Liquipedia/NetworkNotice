@@ -6,6 +6,7 @@
 	margin-bottom:7px;
 	border-left-width:5px;
 	border-left-style:solid;
+	position:relative;
 }
 .networknotice.networknotice-default {
 	color:#444444;

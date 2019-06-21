@@ -11,7 +11,7 @@ class HTML {
 		} elseif ( $style === 'inverse' ) {
 			$extraClasses = 'bgc-dark bdc-light ';
 		}
-		return '<div class="' . $extraClasses . 'networknotice networknotice-' . $style . '" id="networknotice-' . $id . '">' . $outputPage->parseInline( $text, false ) . '</div>';
+		return '<div class="' . $extraClasses . 'networknotice networknotice-' . $style . '" id="networknotice-' . $id . '" data-id="' . $id . '">' . $outputPage->parseInline( $text, false ) . '</div>';
 	}
 
 }
