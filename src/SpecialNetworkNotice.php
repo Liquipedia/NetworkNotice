@@ -220,23 +220,23 @@ class SpecialNetworkNotice extends \SpecialPage {
 							$preContent .= $this->msg( 'networknotice-create-notice-style-label' )->text()
 								. ' ' . $row->style . "\n";
 							if ( $row->wiki ) {
-								$this->msg( 'networknotice-create-notice-wiki-label' )->text()
+								$preContent .= $this->msg( 'networknotice-create-notice-wiki-label' )->text()
 									. ' ' . $row->wiki . "\n";
 							}
 							if ( $row->category ) {
-								$this->msg( 'networknotice-create-notice-category-label' )->text()
+								$preContent .= $this->msg( 'networknotice-create-notice-category-label' )->text()
 									. ' ' . $row->category . "\n";
 							}
 							if ( $row->prefix ) {
-								$this->msg( 'networknotice-create-notice-prefix-label' )->text()
+								$preContent .= $this->msg( 'networknotice-create-notice-prefix-label' )->text()
 									. ' ' . $row->prefix . "\n";
 							}
 							if ( $row->namespace ) {
-								$this->msg( 'networknotice-create-notice-namespace-label' )->text()
+								$preContent .= $this->msg( 'networknotice-create-notice-namespace-label' )->text()
 									. ' ' . $row->namespace . "\n";
 							}
 							if ( $row->action ) {
-								$this->msg( 'networknotice-create-notice-action-label' )->text()
+								$preContent .= $this->msg( 'networknotice-create-notice-action-label' )->text()
 									. ' ' . $row->action . "\n";
 							}
 
