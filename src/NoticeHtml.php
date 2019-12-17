@@ -7,7 +7,7 @@ use Html;
 class NoticeHtml {
 
 	/**
-	 * AGenerate the Html for out notice
+	 * Generate the Html for out notice
 	 * @param OutputPage $outputPage
 	 * @param string $style
 	 * @param string $text
