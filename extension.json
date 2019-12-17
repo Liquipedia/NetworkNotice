@@ -35,12 +35,6 @@
 		"NetworkNotice": "Liquipedia\\NetworkNotice\\SpecialNetworkNotice"
 	},
 	"ResourceModules": {
-		"ext.networknotice.SpecialPage": {
-			"styles": [
-				"styles/ext.networknotice.SpecialPage.css"
-			],
-			"position": "bottom"
-		},
 		"ext.networknotice.Notice": {
 			"styles": [
 				"styles/ext.networknotice.Notice.css"
