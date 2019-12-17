@@ -31,7 +31,6 @@ class SpecialNetworkNotice extends \SpecialPage {
 		}
 		$output = $this->getOutput();
 		$this->setHeaders();
-		$output->addModuleStyles( 'ext.networknotice.SpecialPage' );
 		$params = explode( '/', $par );
 		$isEdit = $params[ 0 ] === 'edit'
 			&& isset( $params[ 1 ] )
