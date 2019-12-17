@@ -55,7 +55,7 @@
 	"networknotice-button-edit-label": "edit",
 	"networknotice-button-delete-label": "delete",
 	"networknotice-text-false-label": "false",
-	"networknotice-text-true-label": "false",
+	"networknotice-text-true-label": "true",
 	
 	"networknotice-success-updated": "Network notice successfully updated!",
 	"networknotice-success-created": "Network notice successfully created!"
