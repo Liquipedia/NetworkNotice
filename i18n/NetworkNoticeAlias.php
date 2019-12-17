@@ -5,12 +5,12 @@
  * @file
  * @ingroup Extensions
  */
- 
-$specialPageAliases = array();
- 
+
+$specialPageAliases = [];
+
 /** English
  * @author Tephus
  */
-$specialPageAliases[ 'en' ] = array(
-	'NetworkNotice' => array( 'NetworkNotice', 'Networknotice' ),
-);
+$specialPageAliases[ 'en' ] = [
+	'NetworkNotice' => [ 'NetworkNotice', 'Networknotice' ],
+];

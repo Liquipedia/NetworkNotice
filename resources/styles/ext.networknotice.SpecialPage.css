@@ -1,3 +1,7 @@
+td {
+	padding: 2px 8px;
+}
+
 form > table td {
 	vertical-align: top;
 }
@@ -11,20 +15,21 @@ form > table td {
 .input-helper {
 	color: #808080;
 	font-style: italic;
-	font-size: .9em;
-	padding-left: .5em;
+	font-size: 0.9em;
+	padding-left: 0.5em;
 }
 
-input[type="checkbox"] {
+input[ type='checkbox' ] {
 	margin-left: 0;
 }
 
 .log {
-	font-size: .9em;
+	font-size: 0.9em;
 }
 
-
-td.input-container, td.input-label, td.input-helper {
+td.input-container,
+td.input-label,
+td.input-helper {
 	padding: 2px 8px;
 }
 
@@ -32,11 +37,8 @@ table.networknotice-preview {
 	width: 100%;
 }
 
-table.networknotice-preview th, td {
-	padding: 2px 8px;
-}
-
 table.networknotice-preview th {
+	padding: 2px 8px;
 	background: #e8e8e8;
 	width: 1px;
 	white-space: nowrap;
@@ -47,11 +49,7 @@ table.networknotice-preview td {
 	background: #f1f1f1;
 }
 
-#catlinks {
-	display: none;
-}
-
 .warning {
-	font-size: .9em;
-	color: red;
+	font-size: 0.9em;
+	color: #ff0000;
 }

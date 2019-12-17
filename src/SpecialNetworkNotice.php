@@ -2,36 +2,28 @@
 
 namespace Liquipedia\NetworkNotice;
 
+use Html;
+use HTMLForm;
+use Status;
+
 class SpecialNetworkNotice extends \SpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
 	}
 
+	/**
+	 * Group name of special page
+	 * @return string group name
+	 */
 	public function getGroupName() {
 		return 'liquipedia';
 	}
 
-	public function createNetworkNotice( $vars ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
-		$dbw->insert( 'networknotice', $vars );
-	}
-
-	public function updateNetworkNotice( $vars, $id ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
-		$dbw->update( 'networknotice', $vars, [ 'notice_id' => $id ] );
-	}
-
-	public function getNetworkNotices() {
-		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
-		return $dbr->select( 'networknotice', [ 'notice_id', 'label', 'notice_text', 'style', 'wiki', 'category', 'prefix', 'namespace', 'action', 'disabled' ] );
-	}
-
-	public function deleteNetworkNotice( $var ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
-		return $dbw->delete( 'networknotice', [ 'notice_id' => $var ] );
-	}
-
+	/**
+	 * Main function of the Special Page
+	 * @param string $par url slug after main page name
+	 */
 	public function execute( $par ) {
 		if ( !$this->userCanExecute( $this->getUser() ) ) {
 			$this->displayRestrictionError();
@@ -40,199 +32,374 @@ class SpecialNetworkNotice extends \SpecialPage {
 		$output = $this->getOutput();
 		$this->setHeaders();
 		$output->addModuleStyles( 'ext.networknotice.SpecialPage' );
-		$request = $this->getRequest();
 		$params = explode( '/', $par );
+		$isEdit = $params[ 0 ] === 'edit'
+			&& isset( $params[ 1 ] )
+			&& !empty( $params[ 1 ] );
 
 		if ( $params[ 0 ] === 'delete' && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) ) {
 			$this->deleteNetworkNotice( $params[ 1 ] );
 		}
 
-		$currentnotices = $this->getNetworkNotices();
-
-		$reqNoticeid = $request->getText( 'noticeid' );
-		$reqLabel = $request->getText( 'noticelabel' );
-		$reqText = $request->getText( 'noticetext' );
-		if ( in_array( $request->getText( 'style' ), Colors::getNoticeColors() ) ) {
-			$reqStyle = $request->getText( 'style' );
-		} else {
-			$reqStyle = 'default';
-		}
-		$reqNamespace = $request->getText( 'namespace' );
-		$reqWiki = $request->getText( 'wiki' );
-		$reqCategory = $request->getText( 'category' );
-		$reqPrefix = $request->getText( 'prefix' );
-		$reqAction = $request->getText( 'action' );
-		$reqDisabled = $request->getBool( 'disabled' );
-
-		if ( $params[ 0 ] === 'edit' && isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) && !$request->getBool( 'createpreviewbutton' ) && !$request->getBool( 'createbutton' ) && !$request->getBool( 'updatebutton' ) ) {
-
-			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-edit-network-notice-heading' )->text() . '</span></h2>' );
-			while ( $row = $currentnotices->fetchRow() ) {
-				if ( $row[ 'notice_id' ] == $params[ 1 ] ) {
-					$reqNoticeid = $row[ 'notice_id' ];
-					$reqLabel = $row[ 'label' ];
-					$reqText = $row[ 'notice_text' ];
-					$reqStyle = $row[ 'style' ];
-					$reqNamespace = $row[ 'namespace' ];
-					$reqWiki = $row[ 'wiki' ];
-					$reqCategory = $row[ 'category' ];
-					$reqPrefix = $row[ 'prefix' ];
-					$reqAction = $row[ 'action' ];
-					$reqDisabled = $row[ 'disabled' ];
+		$formDefaults = [];
+		if ( $isEdit ) {
+			$output->addWikiText( '=={{int:networknotice-edit-network-notice-heading}}==' );
+			$res = $this->getNetworkNoticeById( $params[ 1 ] );
+			if ( $res->numRows() > 0 ) {
+				$row = $res->fetchObject();
+				if ( $row->notice_id == $params[ 1 ] ) {
+					$formDefaults[ 'NoticeId' ] = $row->notice_id;
+					$formDefaults[ 'NoticeLabel' ] = $row->label;
+					$formDefaults[ 'NoticeText' ] = $row->notice_text;
+					$formDefaults[ 'NoticeStyle' ] = $row->style;
+					$formDefaults[ 'NoticeNamespace' ] = $row->namespace;
+					$formDefaults[ 'NoticeWiki' ] = $row->wiki;
+					$formDefaults[ 'NoticeCategory' ] = $row->category;
+					$formDefaults[ 'NoticePagePrefix' ] = $row->prefix;
+					$formDefaults[ 'NoticeAction' ] = $row->action;
+					$formDefaults[ 'NoticeDisabled' ] = $row->disabled;
 				}
 			}
 		} else {
-			$output->addHTML( '<h2><span class="mw-headline" id="Create_networknotice">' . $this->msg( 'networknotice-create-network-notice-heading' )->text() . '</span></h2>' );
+			$output->addWikiText( '=={{int:networknotice-create-network-notice-heading}}==' );
 		}
 
-		$output->addHTML( $this->msg( 'networknotice-create-notice-desc' )->parse() );
+		$output->addWikiText( '{{int:networknotice-create-notice-desc}}' );
 
-		$style_html = '';
-		foreach ( Colors::getNoticeColors() as $color ) {
-			if ( $color === $reqStyle ) {
-				$style_html .= '<option selected="selected" value="' . $color . '">' . $color . '</option>';
-			} else {
-				$style_html .= '<option value="' . $color . '">' . $color . '</option>';
-			}
-		}
-
-		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_network_notice">
-<table>' );
-		if ( $params[ 0 ] === 'edit' ) {
-			$output->addHTML( '
-	<tr>
-		<td class="input-label"><label for="noticeid">' . $this->msg( 'networknotice-edit-notice-id-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="noticeid" id="noticeid" value="' . $reqNoticeid . '" readonly></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-edit-notice-id-helper' )->text() . '</td>
-	</tr>' );
-		}
-		$output->addHTML( '
-	<tr>
-		<td class="input-label"><label for="noticelabel">' . $this->msg( 'networknotice-create-notice-label-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="noticelabel" id="noticelabel" value="' . $reqLabel . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-label-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="noticetext">' . $this->msg( 'networknotice-create-notice-text-label' )->text() . '</label></td>
-		<td class="input-container"><textarea name="noticetext" id="noticetext" style="width: 300pt; height: 60pt;">' . $reqText . '</textarea></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-text-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="style">' . $this->msg( 'networknotice-create-notice-style-label' )->text() . '</label></td>
-		<td class="input-container"><select name="style" id="style" style="width: 165pt; ">' . $style_html . '</select></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-style-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="namespace">' . $this->msg( 'networknotice-create-notice-namespace-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="namespace" id="namespace" value="' . $reqNamespace . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-namespace-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="wiki">' . $this->msg( 'networknotice-create-notice-wiki-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="wiki" id="wiki" value="' . $reqWiki . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-wiki-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="category">' . $this->msg( 'networknotice-create-notice-category-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="category" id="category" value="' . $reqCategory . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-category-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="prefix">' . $this->msg( 'networknotice-create-notice-prefix-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="prefix" id="prefix" value="' . $reqPrefix . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-prefix-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="action">' . $this->msg( 'networknotice-create-notice-action-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="action" id="action" value="' . $reqAction . '"></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-action-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="disabled">' . $this->msg( 'networknotice-create-notice-disable-label' )->text() . '</label></td>
-		<td class="input-container"><input type="checkbox" name="disabled" id="disabled" value="disabled" ' . ( $reqDisabled ? 'checked' : '' ) . '></td>
-		<td class="input-helper">' . $this->msg( 'networknotice-create-notice-disable-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td> </td>
-		<td colspan="2">' );
-		if ( $params[ 0 ] === 'edit' ) {
-			$output->addHTML( '
-			<input type="submit" name="updatebutton" value="' . $this->msg( 'networknotice-create-notice-update-button' )->text() . '"> ' );
-		} else {
-			$output->addHTML( '
-			<input type="submit" name="createbutton" value="' . $this->msg( 'networknotice-create-notice-create-button' )->text() . '"> ' );
-		}
-		$output->addHTML( '
-			<input type="submit" name="createpreviewbutton" value="' . $this->msg( 'networknotice-create-notice-preview-button' )->text() . '">
-		</td>
-	</tr>
-</table>
-</form>
-' );
-
-		if ( $request->getBool( 'createbutton' ) ) {
-
-			$vars = [
-				'label' => $reqLabel,
-				'notice_text' => $reqText,
-				'style' => $reqStyle,
-				'namespace' => $reqNamespace,
-				'wiki' => $reqWiki,
-				'category' => $reqCategory,
-				'prefix' => str_replace( '_', ' ', $reqPrefix ),
-				'action' => $reqAction,
-				'disabled' => $reqDisabled
+		$formDescriptor = [];
+		if ( $isEdit ) {
+			$formDescriptor[ 'NoticeId' ] = [
+				'type' => 'int',
+				'label-message' => 'networknotice-edit-notice-id-label',
+				'help-message' => 'networknotice-edit-notice-id-helper',
+				'maxlength' => 100,
+				'disabled' => true,
+				'default' => ( $isEdit ? $formDefaults[ 'NoticeId' ] : '' )
 			];
-
-			$this->createNetworkNotice( $vars );
-		} elseif ( $request->getBool( 'createpreviewbutton' ) ) {
-			$output->addHTML( '<h3>' . $this->msg( 'networknotice-preview-heading' )->text() . '</h3>' );
-			$output->addHTML( HTML::getNoticeHTML( $output, $reqStyle, $reqText ) );
-		} elseif ( $request->getBool( 'updatebutton' ) ) {
-			$vars = [
-				'label' => $reqLabel,
-				'notice_text' => $reqText,
-				'style' => $reqStyle,
-				'namespace' => $reqNamespace,
-				'wiki' => $reqWiki,
-				'category' => $reqCategory,
-				'prefix' => str_replace( '_', ' ', $reqPrefix ),
-				'action' => $reqAction,
-				'disabled' => $reqDisabled
-			];
-			$this->updateNetworkNotice( $vars, $reqNoticeid );
 		}
+		$formDescriptor[ 'NoticeLabel' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-label-label',
+			'help-message' => 'networknotice-create-notice-label-helper',
+			'maxlength' => 255,
+			'required' => true,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeLabel' ] : '' )
+		];
+		$formDescriptor[ 'NoticeText' ] = [
+			'type' => 'textarea',
+			'label-message' => 'networknotice-create-notice-text-label',
+			'help-message' => 'networknotice-create-notice-text-helper',
+			'maxlength' => 10000,
+			'rows' => 10,
+			'required' => true,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeText' ] : '' )
+		];
+		$formDescriptor[ 'NoticeStyle' ] = [
+			'type' => 'select',
+			'label-message' => 'networknotice-create-notice-style-label',
+			'help-message' => 'networknotice-create-notice-style-helper',
+			'required' => true,
+			'options' => ( function ( $colors ) {
+					$dropDown = [];
+					foreach ( $colors as $color ) {
+						$dropDown[ $color ] = $color;
+					}
+					return $dropDown;
+			} )( Colors::getNoticeColors() ),
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeStyle' ] : '' )
+		];
+		$formDescriptor[ 'NoticeNamespace' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-namespace-label',
+			'help-message' => 'networknotice-create-notice-namespace-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeNamespace' ] : '' )
+		];
+		$formDescriptor[ 'NoticeWiki' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-wiki-label',
+			'help-message' => 'networknotice-create-notice-wiki-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeWiki' ] : '' )
+		];
+		$formDescriptor[ 'NoticeCategory' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-category-label',
+			'help-message' => 'networknotice-create-notice-category-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeCategory' ] : '' )
+		];
+		$formDescriptor[ 'NoticePagePrefix' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-prefix-label',
+			'help-message' => 'networknotice-create-notice-prefix-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticePagePrefix' ] : '' )
+		];
+		$formDescriptor[ 'NoticeAction' ] = [
+			'type' => 'text',
+			'label-message' => 'networknotice-create-notice-action-label',
+			'help-message' => 'networknotice-create-notice-action-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeAction' ] : '' )
+		];
+		$formDescriptor[ 'NoticeDisabled' ] = [
+			'type' => 'check',
+			'label-message' => 'networknotice-create-notice-disable-label',
+			'help-message' => 'networknotice-create-notice-disable-helper',
+			'maxlength' => 255,
+			'default' => ( $isEdit ? $formDefaults[ 'NoticeDisabled' ] : '' )
+		];
 
-		$output->addHTML( '<h2>' . $this->msg( 'networknotice-all-network-notices-heading' )->text() . '</h2>' );
+		$htmlForm = HTMLForm::factory( 'ooui', $formDescriptor, $this->getContext() );
+		$htmlForm->setFormIdentifier( 'createNetworkNotice' );
+		$htmlForm
+			->setSubmitTextMsg( 'networknotice-create-notice-'
+				. ( $isEdit ? 'update' : 'create' )
+				. '-button' )
+			->setSubmitCallback( [ $this, 'createNetworkNoticeCB' ] );
+		$htmlForm->addButton( [
+			'name' => 'createNetworkNoticePreview',
+			'value' => 'createNetworkNoticePreview',
+			'label-message' => 'networknotice-create-notice-preview-button',
+		] );
+		$htmlForm->show();
+
+		$output->addWikiText( '=={{int:networknotice-all-network-notices-heading}}==' );
 
 		$currentnotices = $this->getNetworkNotices();
 
-		$table = '{| class="wikitable sortable"' . "\n";
-		$table .= "|-\n!" . $this->msg( 'networknotice-column-id-label' )->text() . "\n!" . $this->msg( 'networknotice-column-name-label' )->text() . "\n!" . $this->msg( 'networknotice-column-elements-label' )->text() . "\n!" . $this->msg( 'networknotice-column-disabled-label' )->text() . "\n!" . $this->msg( 'networknotice-column-edit-label' )->text() . "\n!" . $this->msg( 'networknotice-column-delete-label' )->text() . "\n";
-		while ( $row = $currentnotices->fetchRow() ) {
-			$table .= "|-\n|" . $row[ 'notice_id' ] . "\n|" . $row[ 'label' ] .
-				"\n|<pre>" .
-				$this->msg( 'networknotice-create-notice-text-label' )->text() . $row[ 'notice_text' ] . "\n" .
-				$this->msg( 'networknotice-create-notice-style-label' )->text() . $row[ 'style' ] . "\n";
-			if ( $row[ 'wiki' ] ) {
-				$table .= $this->msg( 'networknotice-create-notice-wiki-label' )->text() . $row[ 'wiki' ] . "\n";
-			}
-			if ( $row[ 'category' ] ) {
-				$table .= $this->msg( 'networknotice-create-notice-category-label' )->text() . $row[ 'category' ] . "\n";
-			}
-			if ( $row[ 'prefix' ] ) {
-				$table .= $this->msg( 'networknotice-create-notice-prefix-label' )->text() . $row[ 'prefix' ] . "\n";
-			}
-			if ( $row[ 'namespace' ] ) {
-				$table .= $this->msg( 'networknotice-create-notice-namespace-label' )->text() . $row[ 'namespace' ] . "\n";
-			}
-			if ( $row[ 'action' ] ) {
-				$table .= $this->msg( 'networknotice-create-notice-action-label' )->text() . $row[ 'action' ] . "\n";
-			}
-			$table .= "</pre>\n|" . ( $row[ 'disabled' ] ? 'true' : 'false' ) . "\n|[[Special:NetworkNotice/edit/" . $row[ 'notice_id' ] . '|edit]]' . "\n|[[Special:NetworkNotice/delete/" . $row[ 'notice_id' ] . '|delete]]' . "\n";
-		}
-		$table .= '|}';
+		$table = Html::rawElement(
+				'div',
+				[
+					'class' => 'table-responsive'
+				],
+				Html::rawElement(
+					'table',
+					[
+						'class' => 'wikitable sortable'
+					],
+					Html::rawElement(
+						'tr',
+						[],
+						Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-id-label}}'
+						)
+						. Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-name-label}}'
+						)
+						. Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-elements-label}}'
+						)
+						. Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-disabled-label}}'
+						)
+						. Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-edit-label}}'
+						)
+						. Html::rawElement(
+							'th',
+							[],
+							'{{int:networknotice-column-delete-label}}'
+						)
+					)
+					. ( function ( $currentnotices ) {
+						$html = '';
+						foreach ( $currentnotices as $row ) {
+							$preContent = $this->msg( 'networknotice-create-notice-text-label' )->text()
+								. ' ' . $row->notice_text . "\n";
+							$preContent .= $this->msg( 'networknotice-create-notice-style-label' )->text()
+								. ' ' . $row->style . "\n";
+							if ( $row->wiki ) {
+								$this->msg( 'networknotice-create-notice-wiki-label' )->text()
+									. ' ' . $row->wiki . "\n";
+							}
+							if ( $row->category ) {
+								$this->msg( 'networknotice-create-notice-category-label' )->text()
+									. ' ' . $row->category . "\n";
+							}
+							if ( $row->prefix ) {
+								$this->msg( 'networknotice-create-notice-prefix-label' )->text()
+									. ' ' . $row->prefix . "\n";
+							}
+							if ( $row->namespace ) {
+								$this->msg( 'networknotice-create-notice-namespace-label' )->text()
+									. ' ' . $row->namespace . "\n";
+							}
+							if ( $row->action ) {
+								$this->msg( 'networknotice-create-notice-action-label' )->text()
+									. ' ' . $row->action . "\n";
+							}
+
+							$html .= Html::rawElement(
+									'tr',
+									[],
+									Html::rawElement(
+										'td',
+										[],
+										$row->notice_id
+									)
+									. Html::rawElement(
+										'td',
+										[],
+										$row->label
+									)
+									. Html::rawElement(
+										'td',
+										[],
+										Html::rawElement(
+											'pre',
+											[],
+											$preContent
+										)
+									)
+									. Html::rawElement(
+										'td',
+										[],
+										'{{int:networknotice-text-'
+										. ( $row->disabled ? 'true' : 'false' )
+										. '-label}}'
+									)
+									. Html::rawElement(
+										'td',
+										[],
+										'[[Special:NetworkNotice/edit/' . $row->notice_id
+										. '|{{int:networknotice-button-edit-label}}]]'
+									)
+									. Html::rawElement(
+										'td',
+										[],
+										'[[Special:NetworkNotice/delete/' . $row->notice_id
+										. '|{{int:networknotice-button-delete-label}}]]'
+									)
+							);
+						}
+						return $html;
+					} )( $currentnotices )
+				)
+		);
 		$output->addWikiText( $table );
+	}
+
+	/**
+	 * Callback for both create and edit form
+	 * @param array $formData submitted data
+	 * @return ?Status
+	 */
+	public function createNetworkNoticeCB( $formData ) {
+		$request = $this->getRequest();
+		if ( $request->getBool( 'createNetworkNoticePreview' ) ) {
+			$output = $this->getOutput();
+			$output->addWikiText( '==={{int:networknotice-preview-heading}}===' );
+			$output->addHTML(
+				NoticeHtml::getNoticeHTML(
+					$output,
+					$formData[ 'NoticeStyle' ],
+					$formData[ 'NoticeText' ]
+				)
+			);
+		} else {
+			$vars = [
+				'label' => $formData[ 'NoticeLabel' ],
+				'notice_text' => $formData[ 'NoticeText' ],
+				'style' => $formData[ 'NoticeStyle' ],
+				'namespace' => $formData[ 'NoticeNamespace' ],
+				'wiki' => $formData[ 'NoticeWiki' ],
+				'category' => $formData[ 'NoticeCategory' ],
+				'prefix' => str_replace( '_', ' ', $formData[ 'NoticePagePrefix' ] ),
+				'action' => $formData[ 'NoticeAction' ],
+				'disabled' => $formData[ 'NoticeDisabled' ]
+			];
+			$status = new Status;
+			if ( array_key_exists( 'NoticeId', $formData ) ) {
+				$this->updateNetworkNotice( $vars, $formData[ 'NoticeId' ] );
+				$status->warning( 'networknotice-success-updated' );
+			} else {
+				$this->createNetworkNotice( $vars );
+				$status->warning( 'networknotice-success-created' );
+			}
+			return $status;
+		}
+	}
+
+	private function createNetworkNotice( $vars ) {
+		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw->insert(
+			'networknotice',
+			$vars
+		);
+	}
+
+	private function updateNetworkNotice( $vars, $id ) {
+		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw->update(
+			'networknotice',
+			$vars,
+			[
+				'notice_id' => $id
+			]
+		);
+	}
+
+	private function getNetworkNotices() {
+		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
+		return $dbr->select(
+				'networknotice',
+				[
+					'notice_id',
+					'label',
+					'notice_text',
+					'style',
+					'wiki',
+					'category',
+					'prefix',
+					'namespace',
+					'action',
+					'disabled'
+				]
+		);
+	}
+
+	private function getNetworkNoticeById( $id ) {
+		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
+		return $dbr->select(
+				'networknotice',
+				[
+					'notice_id',
+					'label',
+					'notice_text',
+					'style',
+					'wiki',
+					'category',
+					'prefix',
+					'namespace',
+					'action',
+					'disabled'
+				],
+				[
+					'notice_id' => $id
+				]
+		);
+	}
+
+	private function deleteNetworkNotice( $var ) {
+		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		return $dbw->delete(
+				'networknotice',
+				[
+					'notice_id' => $var
+				]
+		);
 	}
 
 }

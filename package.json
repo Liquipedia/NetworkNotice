@@ -1,0 +1,16 @@
+{
+	"name": "liquipedia-networknotice",
+	"homepage": "https://liquipedia.net",
+	"bugs": {
+		"email": "liquipedia@teamliquid.net"
+	},
+	"license": "MIT",
+	"private": true,
+	"devDependencies": {
+		"stylelint-config-wikimedia": "^0.7.0"
+	},
+	"scripts": {
+		"test": "stylelint resources/styles/",
+		"fix": "stylelint resources/styles/ --fix"
+	}
+}

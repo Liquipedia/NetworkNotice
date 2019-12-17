@@ -1,6 +1,6 @@
 {
 	"name": "NetworkNotice",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"author": [
 		"Tephus",
 		"[https://fo-nttax.de Alex Winkler]"
@@ -37,13 +37,13 @@
 	"ResourceModules": {
 		"ext.networknotice.SpecialPage": {
 			"styles": [
-				"ext.networknotice.SpecialPage.css"
+				"styles/ext.networknotice.SpecialPage.css"
 			],
 			"position": "bottom"
 		},
 		"ext.networknotice.Notice": {
 			"styles": [
-				"ext.networknotice.Notice.css"
+				"styles/ext.networknotice.Notice.css"
 			],
 			"position": "bottom"
 		}

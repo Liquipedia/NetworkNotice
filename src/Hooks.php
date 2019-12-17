@@ -2,12 +2,21 @@
 
 namespace Liquipedia\NetworkNotice;
 
+use Action;
+use MWNamespace;
+
 class Hooks {
 
 	private static function getNoticeHTML( $out, $row ) {
-		return HTML::getNoticeHTML( $out, $row->style, $row->notice_text, $row->notice_id );
+		return NoticeHtml::getNoticeHTML( $out, $row->style, $row->notice_text, $row->notice_id );
 	}
 
+	/**
+	 * Add our notices to the SiteNotice return
+	 * @param string &$siteNotice
+	 * @param Skin $skin
+	 * @return bool
+	 */
 	public static function onSiteNoticeAfter( &$siteNotice, $skin ) {
 		$config = $skin->getConfig();
 		$title = $skin->getTitle();
@@ -15,28 +24,36 @@ class Hooks {
 
 		$dbr = wfGetDB( DB_REPLICA, [], $config->get( 'DBname' ) );
 
+		// Remove leading '/'
+		$wiki = substr( $config->get( 'ScriptPath' ), 1 );
 		$categories = $out->getCategories();
-		$namespace = \MWNamespace::getCanonicalName( $title->getNamespace() );
-		$wiki = substr( $config->get( 'ScriptPath' ), 1 );  // Remove leading '/'
-		$pageTitle = $title->getText();
-		$action = \Action::getActionName( $skin );
+		$namespace = MWNamespace::getCanonicalName( $title->getNamespace() );
+		$titleText = $title->getText();
+		$action = Action::getActionName( $skin );
 
-		$movepage = 'Special:MovePage';
-		if ( strncmp( $pageTitle, $movepage, strlen( $movepage ) ) === 0 ) {
+		if ( $title->isSpecialPage() && $title->isSpecial( 'Movepage' ) ) {
 			$action = 'move';
 		} elseif ( $action === 'edit' && !$title->exists() ) {
 			$action = 'create';
 		}
 
 		// Do wiki and namespace checks in DB query
-		$res = $dbr->select( 'networknotice', [ 'notice_text', 'style', 'category', 'prefix', 'notice_id' ], '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND
+		$res = $dbr->select(
+			'networknotice',
+			[
+				'notice_text',
+				'style',
+				'category',
+				'prefix',
+				'notice_id'
+			], '(`namespace` = "' . $namespace . '" OR `namespace` = "") AND
 			 (`wiki` = "' . $wiki . '" OR `wiki` = "") AND
 			 (`action` = "' . $action . '" OR `action` = "") AND
 			 (`disabled` = 0)' );
 
 		foreach ( $res as $row ) {
 			// If prefix doesnt match, go to next row/notice
-			if ( strncmp( $pageTitle, $row->prefix, strlen( $row->prefix ) ) ) {
+			if ( strncmp( $titleText, $row->prefix, strlen( $row->prefix ) ) ) {
 				continue;
 			}
 			// Finally, check categories
@@ -54,6 +71,12 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * Add our CSS files to the page
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
 		$out->addModuleStyles( 'ext.networknotice.Notice' );
 		return true;

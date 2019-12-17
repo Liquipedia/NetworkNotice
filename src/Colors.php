@@ -17,6 +17,10 @@ class Colors {
 		'darkgrey',
 	];
 
+	/**
+	 * Get the available color options
+	 * @return array List of available color options
+	 */
 	public static function getNoticeColors() {
 		return self::$styles;
 	}

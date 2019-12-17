@@ -15,14 +15,14 @@
 	"networknotice-create-network-notice-heading": "Create network notice",
 	"networknotice-edit-network-notice-heading": "Edit network notice",
 	"networknotice-delete-network-notice-heading": "Delete network notice",
-	"networknotice-preview-heading": "Preivew",
+	"networknotice-preview-heading": "Preview",
 	"networknotice-delete-network-notice-deletion-heading": "Confirm deletion",
 
 	"networknotice-create-notice-desc": "Creates network notices (site notices) that can be displayed network wide, with more features than standard site notices.",
 	"networknotice-create-notice-label-label": "Label:",
 	"networknotice-create-notice-label-helper": "Describe the notice, for browsing current notices in the DB. ",
 	"networknotice-create-notice-text-label": "Notice Text:",
-	"networknotice-create-notice-text-helper": "e.g. \"Watch out for that shifty salle[] character\".  Supports wikicode and some HTML.",
+	"networknotice-create-notice-text-helper": "e.g. \"Watch out for that shifty salle[] character\". Supports wikicode and some HTML.",
 	"networknotice-create-notice-style-label": "Color Style:",
 	"networknotice-create-notice-style-helper": "Border, background, and font colors. Default and inverse use wiki color themes. ",
 	"networknotice-create-notice-namespace-label": "Namespace:",
@@ -51,5 +51,12 @@
 	"networknotice-column-elements-label": "Elements",
 	"networknotice-column-disabled-label": "Disabled",
 	"networknotice-column-edit-label": "Edit",
-	"networknotice-column-delete-label": "Delete"
+	"networknotice-column-delete-label": "Delete",
+	"networknotice-button-edit-label": "edit",
+	"networknotice-button-delete-label": "delete",
+	"networknotice-text-false-label": "false",
+	"networknotice-text-true-label": "false",
+	
+	"networknotice-success-updated": "Network notice successfully updated!",
+	"networknotice-success-created": "Network notice successfully created!"
 }
