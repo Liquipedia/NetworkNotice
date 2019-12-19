@@ -27,6 +27,9 @@
 		"BeforePageDisplay": [
 			"Liquipedia\\NetworkNotice\\Hooks::onBeforePageDisplay"
 		],
+		"LPExtensionMenu": [
+			"Liquipedia\\NetworkNotice\\Hooks::onLPExtensionMenu"
+		],
 		"SiteNoticeAfter": [
 			"Liquipedia\\NetworkNotice\\Hooks::onSiteNoticeAfter"
 		]

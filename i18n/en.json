@@ -58,5 +58,7 @@
 	"networknotice-text-true-label": "true",
 	
 	"networknotice-success-updated": "Network notice successfully updated!",
-	"networknotice-success-created": "Network notice successfully created!"
+	"networknotice-success-created": "Network notice successfully created!",
+
+	"lpextmenu-networknotice": "Network Notice"
 }

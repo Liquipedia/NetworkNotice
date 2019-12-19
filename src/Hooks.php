@@ -7,6 +7,17 @@ use MWNamespace;
 
 class Hooks {
 
+	/**
+	 * Callback for LPExtensionMenu hook
+	 * @param array &$extensionsMenu List of extension menu entires
+	 * @param Skin $skin Skin object for context
+	 */
+	public static function onLPExtensionMenu( &$extensionsMenu, $skin ) {
+		if ( $skin->getUser()->isAllowed( 'usenetworknotice' ) ) {
+			$extensionsMenu[ 'networknotice' ] = 'NetworkNotice';
+		}
+	}
+
 	private static function getNoticeHTML( $out, $row ) {
 		return NoticeHtml::getNoticeHTML( $out, $row->style, $row->notice_text, $row->notice_id );
 	}
