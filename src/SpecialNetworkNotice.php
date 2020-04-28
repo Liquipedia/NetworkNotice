@@ -105,7 +105,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 					}
 					return $dropDown;
 			} )( Colors::getNoticeColors() ),
-			'default' => ( $isEdit ? $formDefaults[ 'NoticeStyle' ] : '' )
+			'default' => $isEdit ? $formDefaults[ 'NoticeStyle' ] : ''
 		];
 		$formDescriptor[ 'NoticeNamespace' ] = [
 			'type' => 'text',
@@ -331,6 +331,9 @@ class SpecialNetworkNotice extends \SpecialPage {
 		}
 	}
 
+	/**
+	 * @param array $vars
+	 */
 	private function createNetworkNotice( $vars ) {
 		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->insert(
@@ -339,17 +342,24 @@ class SpecialNetworkNotice extends \SpecialPage {
 		);
 	}
 
+	/**
+	 * @param array $vars
+	 * @param int $id
+	 */
 	private function updateNetworkNotice( $vars, $id ) {
 		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->update(
 			'networknotice',
 			$vars,
 			[
-				'notice_id' => $id
+				'notice_id' => $id,
 			]
 		);
 	}
 
+	/**
+	 * @return IResultWrapper
+	 */
 	private function getNetworkNotices() {
 		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select(
@@ -369,6 +379,10 @@ class SpecialNetworkNotice extends \SpecialPage {
 		);
 	}
 
+	/**
+	 * @param int $id
+	 * @return IResultWrapper
+	 */
 	private function getNetworkNoticeById( $id ) {
 		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select(
@@ -391,12 +405,16 @@ class SpecialNetworkNotice extends \SpecialPage {
 		);
 	}
 
-	private function deleteNetworkNotice( $var ) {
+	/**
+	 * @param int $id
+	 * @return IResultWrapper
+	 */
+	private function deleteNetworkNotice( $id ) {
 		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbw->delete(
 				'networknotice',
 				[
-					'notice_id' => $var
+					'notice_id' => $id
 				]
 		);
 	}

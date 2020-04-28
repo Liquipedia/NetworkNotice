@@ -18,6 +18,11 @@ class Hooks {
 		}
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param stdClass $row
+	 * @return string
+	 */
 	private static function getNoticeHTML( $out, $row ) {
 		return NoticeHtml::getNoticeHTML( $out, $row->style, $row->notice_text, $row->notice_id );
 	}

@@ -10,7 +10,11 @@
 		"stylelint-config-wikimedia": "^0.7.0"
 	},
 	"scripts": {
-		"test": "stylelint resources/styles/",
-		"fix": "stylelint resources/styles/ --fix"
+		"test": "eslint resources/scripts/ && stylelint resources/styles/",
+		"fix": "eslint resources/scripts/ --fix && stylelint resources/styles/ --fix",
+		"test-script": "eslint resources/scripts/",
+		"fix-script": "eslint resources/scripts/ --fix",
+		"test-style": "stylelint resources/styles/",
+		"fix-style": "stylelint resources/styles/ --fix"
 	}
 }
