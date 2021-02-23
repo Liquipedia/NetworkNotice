@@ -35,7 +35,7 @@ class NoticeHtml {
 		$element = Html::rawElement(
 				'div',
 				$attributes,
-				$outputPage->parseInline( $text, false, true )
+				$outputPage->parseInlineAsInterface( $text, false )
 		);
 		return $element;
 	}
