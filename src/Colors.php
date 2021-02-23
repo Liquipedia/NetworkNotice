@@ -4,6 +4,9 @@ namespace Liquipedia\NetworkNotice;
 
 class Colors {
 
+	/**
+	 * @var array
+	 */
 	private static $styles = [
 		'default',
 		'inverse',
