@@ -42,7 +42,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 
 		$formDefaults = [];
 		if ( $isEdit ) {
-			$output->addWikiText( '=={{int:networknotice-edit-network-notice-heading}}==' );
+			$output->addWikiTextAsContent( '=={{int:networknotice-edit-network-notice-heading}}==' );
 			$res = $this->getNetworkNoticeById( $params[ 1 ] );
 			if ( $res->numRows() > 0 ) {
 				$row = $res->fetchObject();
@@ -60,10 +60,10 @@ class SpecialNetworkNotice extends \SpecialPage {
 				}
 			}
 		} else {
-			$output->addWikiText( '=={{int:networknotice-create-network-notice-heading}}==' );
+			$output->addWikiTextAsContent( '=={{int:networknotice-create-network-notice-heading}}==' );
 		}
 
-		$output->addWikiText( '{{int:networknotice-create-notice-desc}}' );
+		$output->addWikiTextAsContent( '{{int:networknotice-create-notice-desc}}' );
 
 		$formDescriptor = [];
 		if ( $isEdit ) {
@@ -104,7 +104,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 						$dropDown[ $color ] = $color;
 					}
 					return $dropDown;
-			} )( Colors::getNoticeColors() ),
+				} )( Colors::getNoticeColors() ),
 			'default' => $isEdit ? $formDefaults[ 'NoticeStyle' ] : ''
 		];
 		$formDescriptor[ 'NoticeNamespace' ] = [
@@ -164,7 +164,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 		] );
 		$htmlForm->show();
 
-		$output->addWikiText( '=={{int:networknotice-all-network-notices-heading}}==' );
+		$output->addWikiTextAsContent( '=={{int:networknotice-all-network-notices-heading}}==' );
 
 		$currentnotices = $this->getNetworkNotices();
 
@@ -287,7 +287,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 					} )( $currentnotices )
 				)
 		);
-		$output->addWikiText( $table );
+		$output->addWikiTextAsContent( $table );
 	}
 
 	/**
@@ -299,7 +299,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 		$request = $this->getRequest();
 		if ( $request->getBool( 'createNetworkNoticePreview' ) ) {
 			$output = $this->getOutput();
-			$output->addWikiText( '==={{int:networknotice-preview-heading}}===' );
+			$output->addWikiTextAsContent( '==={{int:networknotice-preview-heading}}===' );
 			$output->addHTML(
 				NoticeHtml::getNoticeHTML(
 					$output,
