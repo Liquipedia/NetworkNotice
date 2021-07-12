@@ -98,13 +98,13 @@ class SpecialNetworkNotice extends \SpecialPage {
 			'label-message' => 'networknotice-create-notice-style-label',
 			'help-message' => 'networknotice-create-notice-style-helper',
 			'required' => true,
-			'options' => ( function ( $colors ) {
+			'options' => ( static function ( $colors ) {
 					$dropDown = [];
 					foreach ( $colors as $color ) {
 						$dropDown[ $color ] = $color;
 					}
 					return $dropDown;
-				} )( Colors::getNoticeColors() ),
+			} )( Colors::getNoticeColors() ),
 			'default' => $isEdit ? $formDefaults[ 'NoticeStyle' ] : ''
 		];
 		$formDescriptor[ 'NoticeNamespace' ] = [
