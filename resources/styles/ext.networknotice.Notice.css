@@ -55,12 +55,12 @@
 
 .networknotice.networknotice-lightgrey {
 	color: #444444;
-	background-color: #cccccc;
-	border-left-color: #333333;
+	background-color: #eeeeee;
+	border-left-color: #000000;
 }
 
 .networknotice.networknotice-darkgrey {
 	color: #444444;
-	background-color: #eeeeee;
-	border-left-color: #000000;
+	background-color: #cccccc;
+	border-left-color: #333333;
 }
