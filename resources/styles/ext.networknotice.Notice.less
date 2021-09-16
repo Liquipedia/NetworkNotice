@@ -8,17 +8,17 @@
 	border-left-style: solid;
 	position: relative;
 
-	.make-networknotice-skin(default, #444444);
-	.make-networknotice-skin(inverse, #ffffff);
+	.make-networknotice-skin( default, #444444 );
+	.make-networknotice-skin( inverse, #ffffff );
 
-	.make-networknotice(red, #444444, #ffcccc, #ff0000);
-	.make-networknotice(green, #444444, #ccffcc, #00ff00);
-	.make-networknotice(blue, #444444, #ccccff, #0000ff);
-	.make-networknotice(yellow, #444444, #ffffcc, #ffff00);
-	.make-networknotice(purple, #444444, #ffccff, #ff00ff);
-	.make-networknotice(turquoise, #444444, #ccffff, #00ffff);
-	.make-networknotice(lightgrey, #444444, #eeeeee, #000000);
-	.make-networknotice(darkgrey, #444444, #cccccc, #333333);
+	.make-networknotice( red, #444444, #ffcccc, #ff0000 );
+	.make-networknotice( green, #444444, #ccffcc, #00ff00 );
+	.make-networknotice( blue, #444444, #ccccff, #0000ff );
+	.make-networknotice( yellow, #444444, #ffffcc, #ffff00 );
+	.make-networknotice( purple, #444444, #ffccff, #ff00ff );
+	.make-networknotice( turquoise, #444444, #ccffff, #00ffff );
+	.make-networknotice( lightgrey, #444444, #eeeeee, #000000 );
+	.make-networknotice( darkgrey, #444444, #cccccc, #333333 );
 }
 
 .make-networknotice-skin( @name, @color ) {
@@ -27,6 +27,7 @@
 
 		a {
 			color: @color;
+			text-decoration: underline;
 		}
 	}
 }
@@ -39,6 +40,7 @@
 
 		a {
 			color: @border;
+			text-decoration: underline;
 		}
 	}
 }
