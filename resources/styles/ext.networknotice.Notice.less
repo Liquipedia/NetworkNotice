@@ -21,8 +21,8 @@
 	.make-networknotice( darkgrey, #444444, #cccccc, #333333 );
 }
 
-.make-networknotice-skin( @name, @color ) {
-	&.networknotice-@{name} {
+.make-networknotice-skin( @theme, @color ) {
+	&.networknotice-@{theme} {
 		color: @color;
 
 		a {
@@ -32,8 +32,8 @@
 	}
 }
 
-.make-networknotice( @name, @color, @background, @border ) {
-	&.networknotice-@{name} {
+.make-networknotice( @theme, @color, @background, @border ) {
+	&.networknotice-@{theme} {
 		color: @color;
 		background-color: @background;
 		border-left-color: @border;
