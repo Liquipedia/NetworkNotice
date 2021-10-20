@@ -9,6 +9,8 @@
 	position: relative;
 
 	a {
+		color: inherit;
+		font-weight: bold;
 		text-decoration: underline;
 	}
 
@@ -27,11 +29,6 @@
 
 .make-networknotice-skin( @theme, @color ) {
 	&.networknotice-@{theme} {
-		color: @color;
-
-		a {
-			color: @color;
-		}
 	}
 }
 
@@ -40,9 +37,5 @@
 		color: @color;
 		background-color: @background;
 		border-left-color: @border;
-
-		a {
-			color: @border;
-		}
 	}
 }
