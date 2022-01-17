@@ -1,9 +1,11 @@
 <?php
 
-namespace Liquipedia\NetworkNotice;
+namespace Liquipedia\Extension\NetworkNotice\SpecialPage;
 
 use Html;
 use HTMLForm;
+use Liquipedia\Extension\NetworkNotice\Colors;
+use Liquipedia\Extension\NetworkNotice\NoticeHtml;
 use Status;
 
 class SpecialNetworkNotice extends \SpecialPage {
@@ -335,7 +337,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @param array $vars
 	 */
 	private function createNetworkNotice( $vars ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->insert(
 			'networknotice',
 			$vars
@@ -347,7 +349,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @param int $id
 	 */
 	private function updateNetworkNotice( $vars, $id ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->update(
 			'networknotice',
 			$vars,
@@ -410,7 +412,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @return IResultWrapper
 	 */
 	private function deleteNetworkNotice( $id ) {
-		$dbw = wfGetDB( DB_MASTER, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbw->delete(
 				'networknotice',
 				[

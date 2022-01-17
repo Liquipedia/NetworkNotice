@@ -1,30 +1,27 @@
 <?php
 
-namespace Liquipedia\NetworkNotice;
+namespace Liquipedia\Extension\NetworkNotice\Hooks;
 
 use Action;
+use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\SiteNoticeAfterHook;
 use MWNamespace;
+use NoticeHtml;
+use OutputPage;
+use Skin;
 
-class Hooks {
-
-	/**
-	 * Callback for LPExtensionMenu hook
-	 * @param array &$extensionsMenu List of extension menu entires
-	 * @param Skin $skin Skin object for context
-	 */
-	public static function onLPExtensionMenu( &$extensionsMenu, $skin ) {
-		if ( $skin->getUser()->isAllowed( 'usenetworknotice' ) ) {
-			$extensionsMenu[ 'networknotice' ] = 'NetworkNotice';
-		}
-	}
+class MainHookHandler implements
+	BeforePageDisplayHook,
+	SiteNoticeAfterHook
+{
 
 	/**
+	 * Add our CSS files to the page
 	 * @param OutputPage $out
-	 * @param stdClass $row
-	 * @return string
+	 * @param Skin $skin
 	 */
-	private static function getNoticeHTML( $out, $row ) {
-		return NoticeHtml::getNoticeHTML( $out, $row->style, $row->notice_text, $row->notice_id );
+	public function onBeforePageDisplay( $out, $skin ): void {
+		$out->addModuleStyles( 'ext.networknotice.Notice' );
 	}
 
 	/**
@@ -33,7 +30,7 @@ class Hooks {
 	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onSiteNoticeAfter( &$siteNotice, $skin ) {
+	public function onSiteNoticeAfter( &$siteNotice, $skin ) {
 		$config = $skin->getConfig();
 		$title = $skin->getTitle();
 		$out = $skin->getOutput();
@@ -74,27 +71,26 @@ class Hooks {
 			}
 			// Finally, check categories
 			if ( empty( $row->category ) ) {
-				$siteNotice .= self::getNoticeHTML( $out, $row );
+				$siteNotice .= NoticeHtml::getNoticeHTML(
+					$out,
+					$row->style,
+					$row->notice_text,
+					$row->notice_id
+				 );
 			} else {
 				foreach ( $categories as $category ) {
 					if ( $category === $row->category ) {
-						$siteNotice .= self::getNoticeHTML( $out, $row );
+						$siteNotice .= NoticeHtml::getNoticeHTML(
+							$out,
+							$row->style,
+							$row->notice_text,
+							$row->notice_id
+						);
 						break;
 					}
 				}
 			}
 		}
-		return true;
-	}
-
-	/**
-	 * Add our CSS files to the page
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	public static function onBeforePageDisplay( $out, $skin ) {
-		$out->addModuleStyles( 'ext.networknotice.Notice' );
 		return true;
 	}
 

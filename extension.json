@@ -1,6 +1,6 @@
 {
 	"name": "NetworkNotice",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"author": [
 		"Tephus",
 		"[https://fo-nttax.de Alex Winkler]"
@@ -10,7 +10,7 @@
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.35.0"
+		"MediaWiki": ">= 1.35.3"
 	},
 	"MessagesDirs": {
 		"NetworkNotice": [
@@ -21,21 +21,22 @@
 		"NetworkNoticeAlias": "i18n/NetworkNoticeAlias.php"
 	},
 	"AutoloadNamespaces": {
-		"Liquipedia\\NetworkNotice\\": "src/"
+		"Liquipedia\\Extension\\NetworkNotice\\": "src/"
+	},
+	"HookHandlers": {
+		"Main": {
+			"class": "\\Liquipedia\\Extension\\NetworkNotice\\Hooks\\MainHookHandler"
+		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": [
-			"Liquipedia\\NetworkNotice\\Hooks::onBeforePageDisplay"
-		],
+		"BeforePageDisplay": "Main",
 		"LPExtensionMenu": [
-			"Liquipedia\\NetworkNotice\\Hooks::onLPExtensionMenu"
+			"Liquipedia\\Extension\\NetworkNotice\\Hooks\\LegacyHooks::onLPExtensionMenu"
 		],
-		"SiteNoticeAfter": [
-			"Liquipedia\\NetworkNotice\\Hooks::onSiteNoticeAfter"
-		]
+		"SiteNoticeAfter": "Main"
 	},
 	"SpecialPages": {
-		"NetworkNotice": "Liquipedia\\NetworkNotice\\SpecialNetworkNotice"
+		"NetworkNotice": "\\Liquipedia\\Extension\\NetworkNotice\\SpecialPage\\SpecialNetworkNotice"
 	},
 	"ResourceModules": {
 		"ext.networknotice.Notice": {
@@ -57,5 +58,5 @@
 	"AvailableRights": [
 		"usenetworknotice"
 	],
-	"manifest_version": 1
+	"manifest_version": 2
 }

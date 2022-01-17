@@ -1,6 +1,6 @@
 <?php
 
-namespace Liquipedia\NetworkNotice;
+namespace Liquipedia\Extension\NetworkNotice;
 
 use Html;
 
