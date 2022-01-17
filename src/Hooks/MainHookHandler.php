@@ -3,10 +3,10 @@
 namespace Liquipedia\Extension\NetworkNotice\Hooks;
 
 use Action;
+use Liquipedia\Extension\NetworkNotice\NoticeHtml;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
 use MWNamespace;
-use NoticeHtml;
 use OutputPage;
 use Skin;
 
