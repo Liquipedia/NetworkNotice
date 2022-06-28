@@ -14,18 +14,11 @@ class NoticeHtml {
 	 * @param string $id
 	 * @return string Html for our notice
 	 */
-	public static function getNoticeHTML( $outputPage, $style, $text, $id = '0' ) {
+	public static function getNoticeHTML( $outputPage, $text, $id = '0' ) {
 		$classes = [
 			'networknotice',
-			'networknotice-' . $style,
+			'networknotice-default',
 		];
-		if ( $style === 'default' ) {
-			$classes[] = 'bgc-light';
-			$classes[] = 'bdc-dark ';
-		} elseif ( $style === 'inverse' ) {
-			$classes[] = 'bgc-dark';
-			$classes[] = 'bdc-light ';
-		}
 		$attributes = [
 			'id' => 'networknotice-' . $id,
 			'data-id' => $id,

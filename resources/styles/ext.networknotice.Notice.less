@@ -1,10 +1,10 @@
 .networknotice {
-	margin-top: 3px;
+	margin-top: 0.1875rem;
 	display: block;
 	text-align: center;
-	padding: 5px;
-	margin-bottom: 7px;
-	border-left-width: 5px;
+	padding: 0.3125rem;
+	margin-bottom: 0.4375rem;
+	border-left-width: 0.3125rem;
 	border-left-style: solid;
 	position: relative;
 
@@ -15,22 +15,24 @@
 		text-decoration: underline;
 	}
 
-	.make-networknotice-skin( ~'default', #444444 );
-	.make-networknotice-skin( ~'inverse', #ffffff );
+	.make-networknotice-skin( ~'default', var( --clr-wiki-on-primary-container, #444444 ), var( --clr-wiki-primary-container, #ccccff ), var( --clr-wiki-on-primary-container, #0000ff ) );
 
-	.make-networknotice( ~'red', #444444, #ffcccc, #ff0000 );
-	.make-networknotice( ~'green', #444444, #ccffcc, #00ff00 );
-	.make-networknotice( ~'blue', #444444, #ccccff, #0000ff );
-	.make-networknotice( ~'yellow', #444444, #ffffcc, #ffff00 );
-	.make-networknotice( ~'purple', #444444, #ffccff, #ff00ff );
-	.make-networknotice( ~'turquoise', #444444, #ccffff, #00ffff );
-	.make-networknotice( ~'lightgrey', #444444, #eeeeee, #000000 );
-	.make-networknotice( ~'darkgrey', #444444, #cccccc, #333333 );
+	.make-networknotice( ~'red', var( --clr-on-error-container, #444444 ), var( --clr-error-container, #ffcccc ), var( --clr-error, #ff0000 ) );
+	.make-networknotice( ~'green', var( --clr-on-confirmed-container, #444444 ), var( --clr-confirmed-container, #ccffcc ), var( --clr-confirmed, #00ff00 ) );
+	.make-networknotice( ~'blue', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ccccff ), var( --clr-on-primary-container, #0000ff ) );
+	.make-networknotice( ~'lightgrey', var( --clr-on-surface-variant, #444444 ), var( --clr-surface-variant, #eeeeee ), var( --clr-on-surface-variant, #000000 ) );
+	.make-networknotice( ~'darkgrey', var( --clr-surface-variant, #444444 ), var( --clr-on-surface-variant, #cccccc ), var( --clr-surface-variant, #333333 ) );
+	// Yellow, purple and turquoise are now the same color as blue
+	.make-networknotice( ~'yellow', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ffffcc ), var( --clr-on-primary-container, #ffff00 ) );
+	.make-networknotice( ~'purple', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ffccff ), var( --clr-on-primary-container, #ff00ff ) );
+	.make-networknotice( ~'turquoise', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ccffff ), var( --clr-on-primary-container, #00ffff ) );
 }
 
-.make-networknotice-skin( @theme, @color ) {
+.make-networknotice-skin( @theme, @color, @background, @border ) {
 	&.networknotice-@{theme} {
 		color: @color;
+		background-color: @background;
+		border-left-color: @border;
 	}
 }
 
