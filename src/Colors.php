@@ -13,9 +13,6 @@ class Colors {
 		'red',
 		'green',
 		'blue',
-		'yellow',
-		'purple',
-		'turquoise',
 		'lightgrey',
 		'darkgrey',
 	];

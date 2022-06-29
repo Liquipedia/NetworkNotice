@@ -19,13 +19,6 @@ class NoticeHtml {
 			'networknotice',
 			'networknotice-' . $style,
 		];
-		if ( $style === 'default' ) {
-			$classes[] = 'bgc-light';
-			$classes[] = 'bdc-dark ';
-		} elseif ( $style === 'inverse' ) {
-			$classes[] = 'bgc-dark';
-			$classes[] = 'bdc-light ';
-		}
 		$attributes = [
 			'id' => 'networknotice-' . $id,
 			'data-id' => $id,
