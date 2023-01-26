@@ -14,9 +14,21 @@ html.theme--light .networknotice {
 	--network-notice-blue-color: var( --clr-sapphire-90 );
 	--network-notice-blue-background-color: var( --clr-sapphire-10 );
 	--network-notice-blue-border-color: var( --clr-sapphire-90 );
-	--network-notice-lightgrey-color: var( --clr-surface-variant );
-	--network-notice-lightgrey-background-color: var( --clr-on-surface-variant );
-	--network-notice-lightgrey-border-color: var( --clr-surface-variant );
+	--network-notice-lightgrey-color: var( --clr-on-surface-variant );
+	--network-notice-lightgrey-background-color: var( --clr-surface-variant );
+	--network-notice-lightgrey-border-color: var( --clr-on-surface-variant );
+	--network-notice-darkgrey-color: var( --clr-surface-variant );
+	--network-notice-darkgrey-background-color: var( --clr-on-surface-variant );
+	--network-notice-darkgrey-border-color: var( --clr-surface-variant );
+	--network-notice-yellow-color: var( --clr-sun-10 );
+	--network-notice-yellow-background-color: var( --clr-sun-90 );
+	--network-notice-yellow-border-color: var( --clr-sun-40 );
+	--network-notice-purple-color: #42102c;
+	--network-notice-purple-background-color: #f4ddea;
+	--network-notice-purple-border-color: #42102c;
+	--network-notice-turquoise-color: var( --clr-elm-10 );
+	--network-notice-turquoise-background-color: var( --clr-elm-80 );
+	--network-notice-turquoise-border-color: var( --clr-elm-40 );
 }
 
 html.theme--dark .networknotice {
@@ -35,9 +47,21 @@ html.theme--dark .networknotice {
 	--network-notice-blue-color: #ffffff;
 	--network-notice-blue-background-color: var( --clr-sapphire-20 );
 	--network-notice-blue-border-color: var( --clr-sapphire-20 );
-	--network-notice-lightgrey-color: #ffffff;
-	--network-notice-lightgrey-background-color: var( --clr-moon-20 );
-	--network-notice-lightgrey-border-color: var( --clr-moon-20 );
+	--network-notice-lightgrey-color: var( --clr-moon-20 );
+	--network-notice-lightgrey-background-color: var( --clr-moon-90 );
+	--network-notice-lightgrey-border-color: var( --clr-moon-90 );
+	--network-notice-darkgrey-color: #ffffff;
+	--network-notice-darkgrey-background-color: var( --clr-moon-20 );
+	--network-notice-darkgrey-border-color: var( --clr-moon-20 );
+	--network-notice-yellow-color: var( --clr-sun-90 );
+	--network-notice-yellow-background-color: var( --clr-sun-10 );
+	--network-notice-yellow-border-color: var( --clr-sun-10 );
+	--network-notice-purple-color: #f4ddea;
+	--network-notice-purple-background-color: #42102c;
+	--network-notice-purple-border-color: #42102c;
+	--network-notice-turquoise-color: var( --clr-elm-80 );
+	--network-notice-turquoise-background-color: var( --clr-elm-10 );
+	--network-notice-turquoise-border-color: var( --clr-elm-10 );
 }
 
 .networknotice {
@@ -103,31 +127,30 @@ html.theme--dark .networknotice {
 
 	.make-networknotice(
 					~'darkgrey',
-					var( --clr-surface-variant, #444444 ),
-					var( --clr-on-surface-variant, #cccccc ),
-					var( --clr-surface-variant, #333333 )
+					var( --network-notice-darkgrey-color, #444444 ),
+					var( --network-notice-darkgrey-background-color, #cccccc ),
+					var( --network-notice-darkgrey-border-color, #333333 )
 	);
 
-	// Yellow, purple and turquoise are now the same color as blue
 	.make-networknotice(
 					~'yellow',
-					var( --clr-on-primary-container, #444444 ),
-					var( --clr-primary-container, #ffffcc ),
-					var( --clr-on-primary-container, #ffff00 )
+					var( --network-notice-yellow-color, #444444 ),
+					var( --network-notice-yellow-background-color, #ffffcc ),
+					var( --network-notice-yellow-border-color, #ffff00 )
 	);
 
 	.make-networknotice(
 					~'purple',
-					var( --clr-on-primary-container, #444444 ),
-					var( --clr-primary-container, #ffccff ),
-					var( --clr-on-primary-container, #ff00ff )
+					var( --network-notice-purple-color, #444444 ),
+					var( --network-notice-purple-background-color, #ffccff ),
+					var( --network-notice-purple-border-color, #ff00ff )
 	);
 
 	.make-networknotice(
 					~'turquoise',
-					var( --clr-on-primary-container, #444444 ),
-					var( --clr-primary-container, #ccffff ),
-					var( --clr-on-primary-container, #00ffff )
+					var( --network-notice-turquoise-color, #444444 ),
+					var( --network-notice-turquoise-background-color, #ccffff ),
+					var( --network-notice-turquoise-border-color, #00ffff )
 	);
 }
 
