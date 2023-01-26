@@ -17,18 +17,141 @@
 		text-decoration: underline;
 	}
 
-	.make-networknotice-skin( ~'default', var( --clr-wiki-on-primary-container, #444444 ), var( --clr-wiki-primary-container, #ccccff ), var( --clr-wiki-on-primary-container, #0000ff ) );
-	.make-networknotice-skin( ~'inverse', var( --clr-wiki-on-primary, #ffffff ), var( --clr-wiki-primary, #333333 ), var( --clr-wiki-on-primary-container, #000000 ) );
+	.make-networknotice-skin(
+		~'default',
+		var( --network-notice-default-color, #444444 ),
+		var( --network-notice-default-background-color, #ccccff ),
+		var( --network-notice-default-border-color, #0000ff )
+	);
 
-	.make-networknotice( ~'red', var( --clr-on-error-container, #444444 ), var( --clr-error-container, #ffcccc ), var( --clr-error, #ff0000 ) );
-	.make-networknotice( ~'green', var( --clr-on-confirmed-container, #444444 ), var( --clr-confirmed-container, #ccffcc ), var( --clr-confirmed, #00ff00 ) );
-	.make-networknotice( ~'blue', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ccccff ), var( --clr-on-primary-container, #0000ff ) );
-	.make-networknotice( ~'lightgrey', var( --clr-on-surface-variant, #444444 ), var( --clr-surface-variant, #eeeeee ), var( --clr-on-surface-variant, #000000 ) );
-	.make-networknotice( ~'darkgrey', var( --clr-surface-variant, #444444 ), var( --clr-on-surface-variant, #cccccc ), var( --clr-surface-variant, #333333 ) );
-	// Yellow, purple and turquoise are now the same color as blue
-	.make-networknotice( ~'yellow', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ffffcc ), var( --clr-on-primary-container, #ffff00 ) );
-	.make-networknotice( ~'purple', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ffccff ), var( --clr-on-primary-container, #ff00ff ) );
-	.make-networknotice( ~'turquoise', var( --clr-on-primary-container, #444444 ), var( --clr-primary-container, #ccffff ), var( --clr-on-primary-container, #00ffff ) );
+	.make-networknotice-skin(
+		~'inverse',
+		var( --network-notice-inverse-color, #ffffff ),
+		var( --network-notice-inverse-background-color, #333333 ),
+		var( --network-notice-inverse-border-color, #000000 )
+	);
+
+	.make-networknotice(
+		~'red',
+		var( --network-notice-red-color, #444444 ),
+		var( --network-notice-red-background-color, #ffcccc ),
+		var( --network-notice-red-border-color, #ff0000 )
+	);
+
+	.make-networknotice(
+		~'green',
+		var( --network-notice-green-color, #444444 ),
+		var( --network-notice-green-background-color, #ccffcc ),
+		var( --network-notice-green-border-color, #00ff00 )
+	);
+
+	.make-networknotice(
+		~'blue',
+		var( --network-notice-blue-color, #444444 ),
+		var( --network-notice-blue-background-color, #ccccff ),
+		var( --network-notice-blue-border-color, #0000ff )
+	);
+
+	.make-networknotice(
+		~'lightgrey',
+		var( --network-notice-lightgrey-color, #444444 ),
+		var( --network-notice-lightgrey-background-color, #eeeeee ),
+		var( --network-notice-lightgrey-border-color, #000000 )
+	);
+
+	.make-networknotice(
+		~'darkgrey',
+		var( --network-notice-darkgrey-color, #444444 ),
+		var( --network-notice-darkgrey-background-color, #cccccc ),
+		var( --network-notice-darkgrey-border-color, #333333 )
+	);
+
+	.make-networknotice(
+		~'yellow',
+		var( --network-notice-yellow-color, #444444 ),
+		var( --network-notice-yellow-background-color, #ffffcc ),
+		var( --network-notice-yellow-border-color, #ffff00 )
+	);
+
+	.make-networknotice(
+		~'purple',
+		var( --network-notice-purple-color, #444444 ),
+		var( --network-notice-purple-background-color, #ffccff ),
+		var( --network-notice-purple-border-color, #ff00ff )
+	);
+
+	.make-networknotice(
+		~'turquoise',
+		var( --network-notice-turquoise-color, #444444 ),
+		var( --network-notice-turquoise-background-color, #ccffff ),
+		var( --network-notice-turquoise-border-color, #00ffff )
+	);
+}
+
+html.theme--light .networknotice {
+	--network-notice-default-color: var( --clr-wiki-on-primary-container );
+	--network-notice-default-background-color: var( --clr-wiki-primary-container );
+	--network-notice-default-border-color: var( --clr-wiki-on-primary-container );
+	--network-notice-inverse-color: var( --clr-wiki-on-primary );
+	--network-notice-inverse-background-color: var( --clr-wiki-primary );
+	--network-notice-inverse-border-color: var( --clr-wiki-on-primary-container );
+	--network-notice-red-color: var( --clr-semantic-negative-10 );
+	--network-notice-red-background-color: var( --clr-semantic-negative-90 );
+	--network-notice-red-border-color: var( --clr-semantic-negative-40 );
+	--network-notice-green-color: var( --clr-semantic-positive-10 );
+	--network-notice-green-background-color: var( --clr-semantic-positive-90 );
+	--network-notice-green-border-color: var( --clr-semantic-positive-40 );
+	--network-notice-blue-color: var( --clr-sapphire-90 );
+	--network-notice-blue-background-color: var( --clr-sapphire-10 );
+	--network-notice-blue-border-color: var( --clr-sapphire-90 );
+	--network-notice-lightgrey-color: var( --clr-on-surface-variant );
+	--network-notice-lightgrey-background-color: var( --clr-surface-variant );
+	--network-notice-lightgrey-border-color: var( --clr-on-surface-variant );
+	--network-notice-darkgrey-color: var( --clr-surface-variant );
+	--network-notice-darkgrey-background-color: var( --clr-on-surface-variant );
+	--network-notice-darkgrey-border-color: var( --clr-surface-variant );
+	--network-notice-yellow-color: var( --clr-sun-10 );
+	--network-notice-yellow-background-color: var( --clr-sun-90 );
+	--network-notice-yellow-border-color: var( --clr-sun-40 );
+	--network-notice-purple-color: #42102c;
+	--network-notice-purple-background-color: #f4ddea;
+	--network-notice-purple-border-color: #42102c;
+	--network-notice-turquoise-color: var( --clr-elm-10 );
+	--network-notice-turquoise-background-color: var( --clr-elm-80 );
+	--network-notice-turquoise-border-color: var( --clr-elm-40 );
+}
+
+html.theme--dark .networknotice {
+	--network-notice-default-color: #ffffff;
+	--network-notice-default-background-color: var( --clr-primary-30 );
+	--network-notice-default-border-color: var( --clr-primary-30 );
+	--network-notice-inverse-color: var( --clr-primary-10 );
+	--network-notice-inverse-background-color: var( --clr-primary-80 );
+	--network-notice-inverse-border-color: var( --clr-primary-80 );
+	--network-notice-red-color: #ffffff;
+	--network-notice-red-background-color: var( --clr-semantic-negative-20 );
+	--network-notice-red-border-color: var( --clr-semantic-negative-20 );
+	--network-notice-green-color: #ffffff;
+	--network-notice-green-background-color: var( --clr-semantic-positive-20 );
+	--network-notice-green-border-color: var( --clr-semantic-positive-20 );
+	--network-notice-blue-color: #ffffff;
+	--network-notice-blue-background-color: var( --clr-sapphire-20 );
+	--network-notice-blue-border-color: var( --clr-sapphire-20 );
+	--network-notice-lightgrey-color: var( --clr-moon-20 );
+	--network-notice-lightgrey-background-color: var( --clr-moon-90 );
+	--network-notice-lightgrey-border-color: var( --clr-moon-90 );
+	--network-notice-darkgrey-color: #ffffff;
+	--network-notice-darkgrey-background-color: var( --clr-moon-20 );
+	--network-notice-darkgrey-border-color: var( --clr-moon-20 );
+	--network-notice-yellow-color: var( --clr-sun-90 );
+	--network-notice-yellow-background-color: var( --clr-sun-10 );
+	--network-notice-yellow-border-color: var( --clr-sun-10 );
+	--network-notice-purple-color: #f4ddea;
+	--network-notice-purple-background-color: #42102c;
+	--network-notice-purple-border-color: #42102c;
+	--network-notice-turquoise-color: var( --clr-elm-80 );
+	--network-notice-turquoise-background-color: var( --clr-elm-10 );
+	--network-notice-turquoise-border-color: var( --clr-elm-10 );
 }
 
 .make-networknotice-skin( @theme, @color, @background, @border ) {
