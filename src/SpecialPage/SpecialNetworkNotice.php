@@ -16,6 +16,9 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 */
 	private $loadBalancer;
 
+	/**
+	 * @param ILoadBalancer $loadBalancer
+	 */
 	public function __construct( ILoadBalancer $loadBalancer ) {
 		$this->loadBalancer = $loadBalancer;
 		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
