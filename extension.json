@@ -36,7 +36,12 @@
 		"SiteNoticeAfter": "Main"
 	},
 	"SpecialPages": {
-		"NetworkNotice": "\\Liquipedia\\Extension\\NetworkNotice\\SpecialPage\\SpecialNetworkNotice"
+		"NetworkNotice": {
+			"class": "\\Liquipedia\\Extension\\NetworkNotice\\SpecialPage\\SpecialNetworkNotice",
+			"services": [
+				"DBLoadBalancer"
+			]
+		}
 	},
 	"ResourceModules": {
 		"ext.networknotice.Notice": {

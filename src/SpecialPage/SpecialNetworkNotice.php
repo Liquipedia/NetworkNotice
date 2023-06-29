@@ -7,10 +7,17 @@ use HTMLForm;
 use Liquipedia\Extension\NetworkNotice\Colors;
 use Liquipedia\Extension\NetworkNotice\NoticeHtml;
 use Status;
+use Wikimedia\Rdbms\ILoadBalancer;
 
 class SpecialNetworkNotice extends \SpecialPage {
 
-	public function __construct() {
+	/**
+	 * @var ILoadBalancer
+	 */
+	private $loadBalancer;
+
+	public function __construct( ILoadBalancer $loadBalancer ) {
+		$this->loadBalancer = $loadBalancer;
 		parent::__construct( 'NetworkNotice', 'usenetworknotice' );
 	}
 
@@ -337,7 +344,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @param array $vars
 	 */
 	private function createNetworkNotice( $vars ) {
-		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->insert(
 			'networknotice',
 			$vars
@@ -349,7 +356,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @param int $id
 	 */
 	private function updateNetworkNotice( $vars, $id ) {
-		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		$dbw->update(
 			'networknotice',
 			$vars,
@@ -363,7 +370,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @return IResultWrapper
 	 */
 	private function getNetworkNotices() {
-		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
+		$dbr = $this->loadBalancer->getConnection( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select(
 				'networknotice',
 				[
@@ -386,7 +393,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 	 * @return IResultWrapper
 	 */
 	private function getNetworkNoticeById( $id ) {
-		$dbr = wfGetDB( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
+		$dbr = $this->loadBalancer->getConnection( DB_REPLICA, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbr->select(
 				'networknotice',
 				[
@@ -409,10 +416,10 @@ class SpecialNetworkNotice extends \SpecialPage {
 
 	/**
 	 * @param int $id
-	 * @return IResultWrapper
+	 * @return bool
 	 */
 	private function deleteNetworkNotice( $id ) {
-		$dbw = wfGetDB( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY, [], $this->getConfig()->get( 'DBname' ) );
 		return $dbw->delete(
 				'networknotice',
 				[
