@@ -10,7 +10,7 @@
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.35.3"
+		"MediaWiki": ">= 1.39.3"
 	},
 	"MessagesDirs": {
 		"NetworkNotice": [
@@ -36,7 +36,12 @@
 		"SiteNoticeAfter": "Main"
 	},
 	"SpecialPages": {
-		"NetworkNotice": "\\Liquipedia\\Extension\\NetworkNotice\\SpecialPage\\SpecialNetworkNotice"
+		"NetworkNotice": {
+			"class": "\\Liquipedia\\Extension\\NetworkNotice\\SpecialPage\\SpecialNetworkNotice",
+			"services": [
+				"DBLoadBalancer"
+			]
+		}
 	},
 	"ResourceModules": {
 		"ext.networknotice.Notice": {

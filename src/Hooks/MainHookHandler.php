@@ -6,7 +6,7 @@ use Action;
 use Liquipedia\Extension\NetworkNotice\NoticeHtml;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SiteNoticeAfterHook;
-use MWNamespace;
+use MediaWiki\MediaWikiServices;
 use OutputPage;
 use Skin;
 
@@ -34,13 +34,15 @@ class MainHookHandler implements
 		$config = $skin->getConfig();
 		$title = $skin->getTitle();
 		$out = $skin->getOutput();
-
-		$dbr = wfGetDB( DB_REPLICA, [], $config->get( 'DBname' ) );
+		$services = MediaWikiServices::getInstance();
+		$loadBalancer = $services->getDBLoadBalancer();
+		$dbr = $loadBalancer->getConnection( DB_REPLICA, [], $config->get( 'DBname' ) );
 
 		// Remove leading '/'
 		$wiki = substr( $config->get( 'ScriptPath' ), 1 );
 		$categories = $out->getCategories();
-		$namespace = MWNamespace::getCanonicalName( $title->getNamespace() );
+		$namespaceInfo = $services->getNamespaceInfo();
+		$namespace = $namespaceInfo->getCanonicalName( $title->getNamespace() );
 		$titleText = $title->getText();
 		$action = Action::getActionName( $skin );
 
