@@ -43,7 +43,7 @@ class SpecialNetworkNotice extends \SpecialPage {
 		}
 		$output = $this->getOutput();
 		$this->setHeaders();
-		$params = explode( '/', $par );
+		$params = explode( '/', $par ?? '' );
 		$isEdit = $params[ 0 ] === 'edit'
 			&& isset( $params[ 1 ] )
 			&& !empty( $params[ 1 ] );
