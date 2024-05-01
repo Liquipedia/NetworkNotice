@@ -17,6 +17,7 @@
 	"networknotice-delete-network-notice-heading": "Delete network notice",
 	"networknotice-preview-heading": "Preview",
 	"networknotice-delete-network-notice-deletion-heading": "Confirm deletion",
+	"networknotice-close-button": "Close notification",
 
 	"networknotice-create-notice-desc": "Creates network notices (site notices) that can be displayed network wide, with more features than standard site notices.",
 	"networknotice-create-notice-label-label": "Label:",
@@ -56,7 +57,7 @@
 	"networknotice-button-delete-label": "delete",
 	"networknotice-text-false-label": "false",
 	"networknotice-text-true-label": "true",
-	
+
 	"networknotice-success-updated": "Network notice successfully updated!",
 	"networknotice-success-created": "Network notice successfully created!",
 

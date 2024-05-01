@@ -1,3 +1,76 @@
+.network-notice {
+	min-height: 3rem;
+	display: grid;
+	grid-template-columns: auto 3rem;
+	box-shadow: 0 0.0625rem 0.25rem 0 rgba( 0, 0, 0, 0.12 );
+	border-radius: 0.5rem;
+	position: relative;
+	padding: 0 0 0 1.5rem;
+	font-size: 0.875rem;
+	align-items: center;
+	background-color: #FFFFFF; // default for Bruinen & LakesideView light theme
+	margin-bottom: 0.5rem;
+
+	@media (min-width: 768px) {
+		grid-template-columns: auto 3.75rem;
+	}
+
+	.theme--dark & {
+		background-color: #26292D;
+	}
+
+	&::before {
+		content: '';
+		width: 0.5rem;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		background-color: var( --clr-wiki-primary );
+		border-radius: 0.5rem 0 0 0.5rem;
+	}
+
+	&__content {
+		border-right: 0.0625rem solid rgba(0, 0, 0, 0.16);
+		margin: 0.5rem 0;
+		padding-right: 1rem;
+		display: flex;
+		align-items: center;
+		grid-column: 1;
+
+		.theme--dark & {
+			border-right-color: rgba(255, 255, 255, 0.16);
+		}
+
+		&-icon {
+			display: inline-flex;
+			width: 1.5rem;
+			height: 1.5rem;
+			align-items: center;
+			justify-content: center;
+			margin-right: 0.75rem;
+			font-size: 1.125rem;
+			opacity: 0.7;
+		}
+	}
+
+	&__close-button {
+		width: 2.75rem;
+		height: 2.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 0.625rem 0 0.375rem;
+		grid-column: 2;
+
+		@media (min-width: 768px) {
+			width: 2rem;
+			height: 2rem;
+			margin: 0 1rem 0 0.75rem;
+		}
+	}
+}
+
 .networknotice {
 	margin-top: 0.1875rem;
 	display: block;

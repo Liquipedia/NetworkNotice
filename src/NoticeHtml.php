@@ -16,19 +16,62 @@ class NoticeHtml {
 	 */
 	public static function getNoticeHTML( $outputPage, $style, $text, $id = '0' ) {
 		$classes = [
-			'networknotice',
-			'networknotice-' . $style,
+			'network-notice',
+			'network-notice-' . $style,
 		];
 		$attributes = [
-			'id' => 'networknotice-' . $id,
+			'id' => 'network-notice-' . $id,
 			'data-id' => $id,
 			'class' => implode( ' ', $classes ),
 		];
 
+		$iconElement = Html::rawElement(
+			'i',
+			[
+				'class' => 'fa fa-info-circle',
+			]
+		);
+
+		$iconWrapper = Html::rawElement(
+			'div',
+			[
+				'class' => 'network-notice__content-icon',
+			],
+			$iconElement
+		);
+
+		$closeButtonText = wfMessage( 'networknotice-close-button' )->text();
+
+		$closeButtonIcon = Html::rawElement(
+			'i',
+			[
+				'class' => 'fa fa-times',
+			]
+		);
+
+		$closeButton = Html::rawElement(
+			'div',
+			[
+				'class' => 'network-notice__close-button',
+				'aria-label' => $closeButtonText,
+				'data-component' => 'network-notice-close-button',
+				'title' => $closeButtonText,
+			],
+			$closeButtonIcon
+		);
+
+		$contentDiv = Html::rawElement(
+			'div',
+			[
+				'class' => 'network-notice__content',
+			],
+			$iconWrapper . $outputPage->parseInlineAsInterface( $text, false )
+		);
+
 		$element = Html::rawElement(
 				'div',
 				$attributes,
-				$outputPage->parseInlineAsInterface( $text, false )
+				$contentDiv . $closeButton // Include the content div and the close button in the content of the network-notice div
 		);
 		return $element;
 	}
