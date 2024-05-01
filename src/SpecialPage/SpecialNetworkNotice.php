@@ -214,8 +214,6 @@ class SpecialNetworkNotice extends \SpecialPage {
 						foreach ( $currentnotices as $row ) {
 							$preContent = $this->msg( 'networknotice-create-notice-text-label' )->text()
 								. ' ' . $row->notice_text . "\n";
-							$preContent .= $this->msg( 'networknotice-create-notice-style-label' )->text()
-								. ' ' . $row->style . "\n";
 							if ( $row->wiki ) {
 								$preContent .= $this->msg( 'networknotice-create-notice-wiki-label' )->text()
 									. ' ' . $row->wiki . "\n";
@@ -363,7 +361,6 @@ class SpecialNetworkNotice extends \SpecialPage {
 					'notice_id',
 					'label',
 					'notice_text',
-					'style',
 					'wiki',
 					'category',
 					'prefix',
@@ -386,7 +383,6 @@ class SpecialNetworkNotice extends \SpecialPage {
 					'notice_id',
 					'label',
 					'notice_text',
-					'style',
 					'wiki',
 					'category',
 					'prefix',

@@ -57,7 +57,6 @@ class MainHookHandler implements
 			'networknotice',
 			[
 				'notice_text',
-				'style',
 				'category',
 				'prefix',
 				'notice_id'
@@ -75,7 +74,6 @@ class MainHookHandler implements
 			if ( empty( $row->category ) ) {
 				$siteNotice .= NoticeHtml::getNoticeHTML(
 					$out,
-					$row->style,
 					$row->notice_text,
 					$row->notice_id
 				 );
@@ -84,7 +82,6 @@ class MainHookHandler implements
 					if ( $category === $row->category ) {
 						$siteNotice .= NoticeHtml::getNoticeHTML(
 							$out,
-							$row->style,
 							$row->notice_text,
 							$row->notice_id
 						);
