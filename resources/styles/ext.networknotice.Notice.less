@@ -8,18 +8,18 @@
 	padding: 0 0 0 1.5rem;
 	font-size: 0.875rem;
 	align-items: center;
-	background-color: #FFFFFF; // default for Bruinen & LakesideView light theme
+	background-color: #ffffff; // default for Bruinen & LakesideView light theme
 	margin-bottom: 0.5rem;
 
-	@media (min-width: 768px) {
+	@media ( min-width: 768px ) {
 		grid-template-columns: auto 3.75rem;
 	}
 
 	.theme--dark & {
-		background-color: #26292D;
+		background-color: #26292d;
 	}
 
-	&::before {
+	&:before {
 		content: '';
 		width: 0.5rem;
 		top: 0;
@@ -31,7 +31,7 @@
 	}
 
 	&__content {
-		border-right: 0.0625rem solid rgba(0, 0, 0, 0.16);
+		border-right: 0.0625rem solid rgba( 0, 0, 0, 0.16 );
 		margin: 0.5rem 0;
 		padding-right: 1rem;
 		display: flex;
@@ -39,7 +39,7 @@
 		grid-column: 1;
 
 		.theme--dark & {
-			border-right-color: rgba(255, 255, 255, 0.16);
+			border-right-color: rgba( 255, 255, 255, 0.16 );
 		}
 
 		&-icon {
@@ -51,6 +51,10 @@
 			margin-right: 0.75rem;
 			font-size: 1.125rem;
 			opacity: 0.7;
+
+			@media ( max-width: 768px ) {
+				display: none;
+			}
 		}
 	}
 
@@ -63,182 +67,10 @@
 		margin: 0 0.625rem 0 0.375rem;
 		grid-column: 2;
 
-		@media (min-width: 768px) {
+		@media ( min-width: 768px ) {
 			width: 2rem;
 			height: 2rem;
 			margin: 0 1rem 0 0.75rem;
 		}
-	}
-}
-
-.networknotice {
-	margin-top: 0.1875rem;
-	display: block;
-	text-align: center;
-	padding: 0.3125rem 1.5rem 0.3125rem 0.3125rem;
-	margin-bottom: 0.4375rem;
-	border-left-width: 0.3125rem;
-	border-left-style: solid;
-	position: relative;
-
-	a,
-	a:visited,
-	a:hover,
-	a:visited:hover {
-		color: inherit;
-		font-weight: bold;
-		text-decoration: underline;
-	}
-
-	.make-networknotice-skin(
-		~'default',
-		var( --network-notice-default-color, #444444 ),
-		var( --network-notice-default-background-color, #ccccff ),
-		var( --network-notice-default-border-color, #0000ff )
-	);
-
-	.make-networknotice-skin(
-		~'inverse',
-		var( --network-notice-inverse-color, #ffffff ),
-		var( --network-notice-inverse-background-color, #333333 ),
-		var( --network-notice-inverse-border-color, #000000 )
-	);
-
-	.make-networknotice(
-		~'red',
-		var( --network-notice-red-color, #444444 ),
-		var( --network-notice-red-background-color, #ffcccc ),
-		var( --network-notice-red-border-color, #ff0000 )
-	);
-
-	.make-networknotice(
-		~'green',
-		var( --network-notice-green-color, #444444 ),
-		var( --network-notice-green-background-color, #ccffcc ),
-		var( --network-notice-green-border-color, #00ff00 )
-	);
-
-	.make-networknotice(
-		~'blue',
-		var( --network-notice-blue-color, #444444 ),
-		var( --network-notice-blue-background-color, #ccccff ),
-		var( --network-notice-blue-border-color, #0000ff )
-	);
-
-	.make-networknotice(
-		~'lightgrey',
-		var( --network-notice-lightgrey-color, #444444 ),
-		var( --network-notice-lightgrey-background-color, #eeeeee ),
-		var( --network-notice-lightgrey-border-color, #000000 )
-	);
-
-	.make-networknotice(
-		~'darkgrey',
-		var( --network-notice-darkgrey-color, #444444 ),
-		var( --network-notice-darkgrey-background-color, #cccccc ),
-		var( --network-notice-darkgrey-border-color, #333333 )
-	);
-
-	.make-networknotice(
-		~'yellow',
-		var( --network-notice-yellow-color, #444444 ),
-		var( --network-notice-yellow-background-color, #ffffcc ),
-		var( --network-notice-yellow-border-color, #ffff00 )
-	);
-
-	.make-networknotice(
-		~'purple',
-		var( --network-notice-purple-color, #444444 ),
-		var( --network-notice-purple-background-color, #ffccff ),
-		var( --network-notice-purple-border-color, #ff00ff )
-	);
-
-	.make-networknotice(
-		~'turquoise',
-		var( --network-notice-turquoise-color, #444444 ),
-		var( --network-notice-turquoise-background-color, #ccffff ),
-		var( --network-notice-turquoise-border-color, #00ffff )
-	);
-}
-
-html.theme--light .networknotice {
-	--network-notice-default-color: var( --clr-wiki-on-primary-container );
-	--network-notice-default-background-color: var( --clr-wiki-primary-container );
-	--network-notice-default-border-color: var( --clr-wiki-on-primary-container );
-	--network-notice-inverse-color: var( --clr-wiki-on-primary );
-	--network-notice-inverse-background-color: var( --clr-wiki-primary );
-	--network-notice-inverse-border-color: var( --clr-wiki-on-primary-container );
-	--network-notice-red-color: var( --clr-semantic-negative-10 );
-	--network-notice-red-background-color: var( --clr-semantic-negative-90 );
-	--network-notice-red-border-color: var( --clr-semantic-negative-40 );
-	--network-notice-green-color: var( --clr-semantic-positive-10 );
-	--network-notice-green-background-color: var( --clr-semantic-positive-90 );
-	--network-notice-green-border-color: var( --clr-semantic-positive-40 );
-	--network-notice-blue-color: var( --clr-sapphire-90 );
-	--network-notice-blue-background-color: var( --clr-sapphire-10 );
-	--network-notice-blue-border-color: var( --clr-sapphire-90 );
-	--network-notice-lightgrey-color: var( --clr-on-surface-variant );
-	--network-notice-lightgrey-background-color: var( --clr-surface-variant );
-	--network-notice-lightgrey-border-color: var( --clr-on-surface-variant );
-	--network-notice-darkgrey-color: var( --clr-surface-variant );
-	--network-notice-darkgrey-background-color: var( --clr-on-surface-variant );
-	--network-notice-darkgrey-border-color: var( --clr-surface-variant );
-	--network-notice-yellow-color: var( --clr-sun-10 );
-	--network-notice-yellow-background-color: var( --clr-sun-90 );
-	--network-notice-yellow-border-color: var( --clr-sun-40 );
-	--network-notice-purple-color: var( --clr-redviolet-10 );
-	--network-notice-purple-background-color: var( --clr-redviolet-90 );
-	--network-notice-purple-border-color: var( --clr-redviolet-40 );
-	--network-notice-turquoise-color: var( --clr-elm-10 );
-	--network-notice-turquoise-background-color: var( --clr-elm-80 );
-	--network-notice-turquoise-border-color: var( --clr-elm-40 );
-}
-
-html.theme--dark .networknotice {
-	--network-notice-default-color: #ffffff;
-	--network-notice-default-background-color: var( --clr-primary-30 );
-	--network-notice-default-border-color: var( --clr-primary-30 );
-	--network-notice-inverse-color: var( --clr-primary-10 );
-	--network-notice-inverse-background-color: var( --clr-primary-80 );
-	--network-notice-inverse-border-color: var( --clr-primary-80 );
-	--network-notice-red-color: #ffffff;
-	--network-notice-red-background-color: var( --clr-semantic-negative-20 );
-	--network-notice-red-border-color: var( --clr-semantic-negative-20 );
-	--network-notice-green-color: #ffffff;
-	--network-notice-green-background-color: var( --clr-semantic-positive-20 );
-	--network-notice-green-border-color: var( --clr-semantic-positive-20 );
-	--network-notice-blue-color: #ffffff;
-	--network-notice-blue-background-color: var( --clr-sapphire-20 );
-	--network-notice-blue-border-color: var( --clr-sapphire-20 );
-	--network-notice-lightgrey-color: var( --clr-moon-20 );
-	--network-notice-lightgrey-background-color: var( --clr-moon-90 );
-	--network-notice-lightgrey-border-color: var( --clr-moon-90 );
-	--network-notice-darkgrey-color: #ffffff;
-	--network-notice-darkgrey-background-color: var( --clr-moon-20 );
-	--network-notice-darkgrey-border-color: var( --clr-moon-20 );
-	--network-notice-yellow-color: var( --clr-sun-90 );
-	--network-notice-yellow-background-color: var( --clr-sun-10 );
-	--network-notice-yellow-border-color: var( --clr-sun-10 );
-	--network-notice-purple-color: var( --clr-redviolet-90 );
-	--network-notice-purple-background-color: var( --clr-redviolet-10 );
-	--network-notice-purple-border-color: var( --clr-redviolet-10 );
-	--network-notice-turquoise-color: var( --clr-elm-80 );
-	--network-notice-turquoise-background-color: var( --clr-elm-10 );
-	--network-notice-turquoise-border-color: var( --clr-elm-10 );
-}
-
-.make-networknotice-skin( @theme, @color, @background, @border ) {
-	&.networknotice-@{theme} {
-		color: @color;
-		background-color: @background;
-		border-left-color: @border;
-	}
-}
-
-.make-networknotice( @theme, @color, @background, @border ) {
-	&.networknotice-@{theme} {
-		color: @color;
-		background-color: @background;
-		border-left-color: @border;
 	}
 }

@@ -9,15 +9,13 @@ class NoticeHtml {
 	/**
 	 * Generate the Html for out notice
 	 * @param OutputPage $outputPage
-	 * @param string $style
 	 * @param string $text
 	 * @param string $id
 	 * @return string Html for our notice
 	 */
-	public static function getNoticeHTML( $outputPage, $style, $text, $id = '0' ) {
+	public static function getNoticeHTML( $outputPage, $text, $id = '0' ) {
 		$classes = [
-			'network-notice',
-			'network-notice-' . $style,
+			'network-notice'
 		];
 		$attributes = [
 			'id' => 'network-notice-' . $id,
@@ -71,7 +69,7 @@ class NoticeHtml {
 		$element = Html::rawElement(
 				'div',
 				$attributes,
-				$contentDiv . $closeButton // Include the content div and the close button in the content of the network-notice div
+				$contentDiv . $closeButton
 		);
 		return $element;
 	}
