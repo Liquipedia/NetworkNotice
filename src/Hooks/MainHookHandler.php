@@ -16,12 +16,11 @@ class MainHookHandler implements
 {
 
 	/**
-	 * Add our CSS files to the page
+	 * Add our JS and CSS files to the page
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$out->addModuleStyles( 'ext.networknotice.Notice' );
 		$out->addModules( 'ext.networknotice.Notice' );
 	}
 
