@@ -4,7 +4,6 @@ namespace Liquipedia\Extension\NetworkNotice\SpecialPage;
 
 use Html;
 use HTMLForm;
-use Liquipedia\Extension\NetworkNotice\Colors;
 use Liquipedia\Extension\NetworkNotice\NoticeHtml;
 use Status;
 use Wikimedia\Rdbms\ILoadBalancer;
