@@ -22,6 +22,7 @@ class MainHookHandler implements
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
 		$out->addModuleStyles( 'ext.networknotice.Notice' );
+		$out->addModules( 'ext.networknotice.Notice' );
 	}
 
 	/**

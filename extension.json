@@ -48,6 +48,9 @@
 			"styles": [
 				"styles/ext.networknotice.Notice.less"
 			],
+			"scripts": [
+				"scripts/ext.networknotice.Notice.js"
+			],
 			"position": "bottom"
 		}
 	},
