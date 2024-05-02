@@ -1,15 +1,13 @@
 {
   "extends": [
-    "wikimedia/client",
-    "wikimedia/jquery",
     "wikimedia/mediawiki",
-    "wikimedia/client-es6"
+    "wikimedia/client/common",
+    "wikimedia/language/es2020"
   ],
   "globals": {
     "require": "readonly",
     "module": "readonly",
-    "OO": "readonly",
-    "jQuery": "readonly"
+    "OO": "readonly"
   },
   "rules": {
     "space-before-function-paren": "off",
@@ -19,15 +17,6 @@
     "no-use-before-define": "off",
     "mediawiki/class-doc": "off",
     "mediawiki/no-nodelist-unsupported-methods": "off",
-    "jsdoc/require-param-type": "off",
-    "es-x/no-classes": "off",
-    "es-x/no-block-scoped-variables": "off",
-    "es-x/no-spread-elements": "off",
-    "es-x/no-default-parameters": "off",
-    "es-x/no-array-prototype-includes": "off",
-    "es-x/no-string-prototype-includes": "off",
-    "es-x/no-array-from": "off",
-    "es-x/no-template-literals": "off",
-    "es-x/no-for-of-loops": "off"
+    "jsdoc/require-param-type": "off"
   }
 }
