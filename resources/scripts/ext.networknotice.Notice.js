@@ -24,7 +24,11 @@
 
 	function getItemsFromStorage() {
 		const items = localStorage.getItem( LOCAL_STORAGE_KEY );
-		return items ? JSON.parse( items ) : [ ];
+		try {
+			return items ? JSON.parse( items ) : [];
+		} catch( e ) {
+			return [ ];
+		}
 	}
 
 	function putIntoStorage( key ) {
