@@ -26,7 +26,7 @@
 		const items = localStorage.getItem( LOCAL_STORAGE_KEY );
 		try {
 			return items ? JSON.parse( items ) : [];
-		} catch( e ) {
+		} catch ( e ) {
 			return [ ];
 		}
 	}
