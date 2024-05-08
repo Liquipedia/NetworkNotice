@@ -48,10 +48,13 @@
 		}
 	},
 	"ResourceModules": {
-		"ext.networknotice.Notice": {
+		"ext.networknotice.Notice.styles": {
 			"styles": [
 				"styles/ext.networknotice.Notice.less"
 			],
+			"position": "bottom"
+		},
+		"ext.networknotice.Notice.scripts": {
 			"scripts": [
 				"scripts/ext.networknotice.Notice.js"
 			],

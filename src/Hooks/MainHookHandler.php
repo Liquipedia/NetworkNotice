@@ -21,7 +21,8 @@ class MainHookHandler implements
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
-		$out->addModules( 'ext.networknotice.Notice' );
+		$out->addModuleStyles( 'ext.networknotice.Notice.styles' );
+		$out->addModules( 'ext.networknotice.Notice.scripts' );
 	}
 
 	/**
