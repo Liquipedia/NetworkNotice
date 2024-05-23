@@ -5,5 +5,7 @@ on: [ push, pull_request, workflow_dispatch ]
 jobs:
   test-php:
     uses: Liquipedia/CI-templates/.github/workflows/.php-ci.yml@main
+  test-javascript:
+    uses: Liquipedia/CI-templates/.github/workflows/.javascript-ci.yml@main
   test-css:
     uses: Liquipedia/CI-templates/.github/workflows/.css-ci.yml@main
