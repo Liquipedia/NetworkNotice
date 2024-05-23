@@ -47,11 +47,11 @@
 	/**
 	 * Check on document readyState
 	 */
-	if ( document.readyState === 'interactive' ) {
+	if ( [ 'interactive', 'complete' ].includes( document.readyState ) ) {
 		init();
 	} else {
 		document.addEventListener( 'readystatechange', () => {
-			if ( document.readyState === 'interactive' ) {
+			if ( [ 'interactive', 'complete' ].includes( document.readyState ) ) {
 				init();
 			}
 		} );
