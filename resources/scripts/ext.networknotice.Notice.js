@@ -5,7 +5,7 @@
 
 	function init() {
 		if ( 'localStorage' in window ) {
-			document.querySelectorAll( '[data-component="network-notice"]' ).forEach( function( notice ) {
+			document.querySelectorAll( '[data-component="network-notice"]' ).forEach( ( notice ) => {
 				const key = notice.dataset.id;
 				if ( isInStorage( key ) ) {
 					notice.classList.add( 'd-none' );
