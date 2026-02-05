@@ -1,6 +1,6 @@
 {
 	"name": "NetworkNotice",
-	"version": "3.3.0",
+	"version": "4.0.0",
 	"author": [
 		"Tephus",
 		"[https://fo-nttax.de Alex Winkler]"
@@ -10,7 +10,10 @@
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.39.3"
+		"MediaWiki": ">= 1.43.0",
+		"extensions": {
+			"SCSS": "*"
+		}
 	},
 	"MessagesDirs": {
 		"NetworkNotice": [
@@ -49,8 +52,9 @@
 	},
 	"ResourceModules": {
 		"ext.networknotice.Notice.styles": {
+			"class": "\\Liquipedia\\Extension\\SCSS\\ResourceLoaderScssModule",
 			"styles": [
-				"styles/ext.networknotice.Notice.less"
+				"styles/ext.networknotice.Notice.scss"
 			],
 			"position": "bottom"
 		},
